@@ -77,3 +77,19 @@ function validarCIF(string $cif): bool
         return $control === $controlNumerico || $control === $controlLetra;
     }
 }
+
+//Mensaje de error
+function setFlash(string $tipo, string $mensaje): void
+{
+    $_SESSION['flash'][$tipo][] = $mensaje;
+}
+
+function getFlash(): array
+{
+    if (!isset($_SESSION['flash'])) {
+        return [];
+    }
+    $mensajes = $_SESSION['flash'];
+    unset($_SESSION['flash']); // Se borran después de mostrarlos
+    return $mensajes;
+}

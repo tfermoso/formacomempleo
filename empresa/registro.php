@@ -97,8 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!empty($errores)) {
         // De momento, redirigimos con el primer error
-        $error = urlencode($errores[0]);
-        header("Location: registro.php?error=$error");
+        setFlash('error', $errores[0]);
+        header("Location: registro.php");
         exit;
     }
 
@@ -106,9 +106,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $pdo->beginTransaction();
 
+        // Insert empresa
         $sqlEmpresa = "INSERT INTO empresas 
-            (cif, nombre, telefono, web, persona_contacto, email_contacto, direccion, cp, ciudad, provincia, logo, verificada)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, 0)";
+        (cif, nombre, telefono, web, persona_contacto, email_contacto, direccion, cp, ciudad, provincia, logo, verificada)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, 0)";
         $stmtEmpresa = $pdo->prepare($sqlEmpresa);
         $stmtEmpresa->execute([
             $cif,
@@ -125,11 +126,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $idEmpresa = $pdo->lastInsertId();
 
+        // Insert usuario
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
         $sqlUsuario = "INSERT INTO usuarios 
-            (nombre, apellidos, telefono, email, password_hash, idempresa, is_admin)
-            VALUES (?, ?, ?, ?, ?, ?, 0)";
+        (nombre, apellidos, telefono, email, password_hash, idempresa, is_admin)
+        VALUES (?, ?, ?, ?, ?, ?, 0)";
         $stmtUsuario = $pdo->prepare($sqlUsuario);
         $stmtUsuario->execute([
             $nombreUsuario,
@@ -140,23 +142,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $idEmpresa
         ]);
 
+        // ✅ Confirmamos la transacción
         $pdo->commit();
 
-        // Aquí podrías enviar email de confirmación con PHPMailer
+        // ✅ AQUÍ VA EL FLASH MESSAGE
+        setFlash('success', 'Empresa registrada correctamente.');
 
-        header("Location: ../index.php?registro=ok");
+        // ✅ Redirigimos sin parámetros GET
+        header("Location: ../index.php");
         exit;
     } catch (Exception $e) {
         $pdo->rollBack();
-        // Para depuración puedes hacer log del error
-        $error = urlencode("Error al registrar la empresa. Inténtalo de nuevo.");
-        header("Location: registro.php?error=$error");
+        setFlash('error', 'Error al registrar la empresa. Inténtalo de nuevo.');
+        header("Location: registro.php");
         exit;
     }
 }
 
 $tokenCSRF = generarTokenCSRF();
-?>
+
 
 
 
@@ -176,11 +180,17 @@ $tokenCSRF = generarTokenCSRF();
     <h1>Registro de empresa</h1>
 
     <?php
-    // Mostrar errores si los hay (se puede mejorar más adelante)
-    if (!empty($_GET['error'])) {
-        echo '<p style="color:red;">' . htmlspecialchars($_GET['error']) . '</p>';
+    $mensajes = getFlash();
+
+    if (!empty($mensajes)) {
+        foreach ($mensajes as $tipo => $lista) {
+            foreach ($lista as $msg) {
+                echo "<p class='mensaje-$tipo'>$msg</p>";
+            }
+        }
     }
     ?>
+
 
     <form action="registro.php" method="post" id="formRegistroEmpresa" novalidate>
         <input type="hidden" name="csrf_token" value="<?php echo $tokenCSRF; ?>">
@@ -197,7 +207,7 @@ $tokenCSRF = generarTokenCSRF();
         <input type="email" name="email_empresa" id="email_empresa" required>
 
         <label for="telefono_empresa">Teléfono empresa</label>
-        <input type="text" name="telefono_empresa" id="telefono_empresa">
+        <input type="text" name="telefono_empresa" id="telefono_empresa" required>
 
         <label for="web_empresa">Web</label>
         <input type="url" name="web_empresa" id="web_empresa">
