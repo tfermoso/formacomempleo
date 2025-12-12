@@ -94,16 +94,13 @@ function inscribirseEnOferta(mysqli $conn, int $idoferta, int $idcandidato): boo
 ?>
 <?php
 
-function getCandidatoCompleto(mysqli $conn, int $id) {
-    $stmt = $conn->prepare("
-        SELECT *
-        FROM candidatos
-        WHERE id = ? AND deleted_at IS NULL
-    ");
+function getCandidatoCompleto($conn, $id) {
+    $stmt = $conn->prepare("SELECT * FROM candidatos WHERE id = ? AND deleted_at IS NULL");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     return $stmt->get_result()->fetch_assoc();
 }
+
 
 function actualizarCandidato(mysqli $conn, int $id, array $data) {
     $sql = "

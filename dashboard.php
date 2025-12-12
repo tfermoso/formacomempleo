@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+require_once 'utility/header.php';
+
 require_once __DIR__ . '/utility/config.php';
 require_once __DIR__ . '/utility/functions.php';
 
@@ -220,4 +222,6 @@ function toggleDetalles(id) {
 </script>
 
 </body>
+
 </html>
+<?php include 'utility/footer.php'; ?>

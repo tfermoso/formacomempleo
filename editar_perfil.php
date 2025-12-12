@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+require_once 'utility/header.php';
+
 require_once 'utility/config.php';
 require_once 'utility/functions.php';
 
@@ -114,3 +117,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </body>
 </html>
+<?php include 'utility/footer.php'; ?>
