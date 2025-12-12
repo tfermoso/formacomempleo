@@ -19,12 +19,44 @@ function isLoggedIn()
     return isset($_SESSION["idusuario"]) && isset($_SESSION["idempresa"]);
 }
 
-// Redirige al login si no está logueado
+// Redirigir si no hay sesión iniciada
 function redirectIfNotLoggedIn()
 {
-    if (!isLoggedIn()) {
-        header("Location: login.php");
+    if (!isset($_SESSION["idusuario"]) || !isset($_SESSION["idempresa"])) {
+        header("Location: login.php?msg=" . urlencode("Debes iniciar sesión.") . "&type=error");
         exit;
     }
 }
-?>
+
+// Obtener datos del usuario logueado
+function obtenerUsuarioLogueado($conn, $idusuario)
+{
+    $stmt = $conn->prepare("SELECT nombre, apellidos FROM usuarios WHERE id = ?");
+    $stmt->bind_param("i", $idusuario);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $usuario = $resultado->fetch_assoc();
+    $stmt->close();
+    return $usuario;
+}
+
+// Obtener lista de sectores
+function obtenerSectores($conn)
+{
+    return $conn->query("SELECT id, nombre FROM sectores ORDER BY nombre ASC");
+}
+
+// Obtener lista de modalidades
+function obtenerModalidades($conn)
+{
+    return $conn->query("SELECT id, nombre FROM modalidad ORDER BY nombre ASC");
+}
+
+// Mostrar mensajes de alerta
+function mostrarMensaje($mensaje, $tipo)
+{
+    if ($mensaje) {
+        $clase = $tipo === "success" ? "alert-success" : "alert-error";
+        echo '<div class="alert ' . $clase . '">' . htmlspecialchars($mensaje) . '</div>';
+    }
+}

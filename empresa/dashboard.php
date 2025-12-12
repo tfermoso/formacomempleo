@@ -2,27 +2,11 @@
 session_start();
 require_once __DIR__ . "/../includes/functions.php";
 
-
 redirectIfNotLoggedIn();
-
-// Crear conexión antes de cualquier consulta
 $conn = conectarBD();
 
-// Obtener nombre del usuario logueado
-$stmt = $conn->prepare("SELECT nombre, apellidos FROM usuarios WHERE id = ?");
-$stmt->bind_param("i", $_SESSION["idusuario"]);
-$stmt->execute();
-$resultadoUsuario = $stmt->get_result();
-$usuario = $resultadoUsuario->fetch_assoc();
-$stmt->close();
-
-// Seguridad: si no se encuentra el usuario por alguna razón
-if (!$usuario) {
-    // Opcional: redirigir al logout si falta coherencia
-    header("Location: logout.php");
-    exit;
-}
-
+// Obtener usuario logueado
+$usuario = obtenerUsuarioLogueado($conn, $_SESSION["idusuario"]);
 $idempresa = intval($_SESSION["idempresa"]);
 
 // Cargar ofertas de la empresa
@@ -32,6 +16,9 @@ $stmt = $conn->prepare("SELECT id, titulo, estado, fecha_publicacion, publicar_h
 $stmt->bind_param("i", $idempresa);
 $stmt->execute();
 $resultado = $stmt->get_result();
+$stmt->close();
+
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -63,7 +50,7 @@ $resultado = $stmt->get_result();
         <table>
             <thead>
                 <tr>
-                    <th>#</th>
+
                     <th>Título</th>
                     <th>Estado</th>
                     <th>Fecha publicación</th>
@@ -72,19 +59,25 @@ $resultado = $stmt->get_result();
                 </tr>
             </thead>
             <tbody>
-                <?php while ($row = $resultado->fetch_assoc()): ?>
+                <?php if ($resultado->num_rows > 0): ?>
+                    <?php while ($row = $resultado->fetch_assoc()): ?>
+                        <tr>
+
+                            <td><?php echo htmlspecialchars($row["titulo"]); ?></td>
+                            <td><?php echo htmlspecialchars($row["estado"]); ?></td>
+                            <td><?php echo htmlspecialchars($row["fecha_publicacion"]); ?></td>
+                            <td><?php echo htmlspecialchars($row["publicar_hasta"]); ?></td>
+                            <td>
+                                <a href="editar_oferta.php?id=<?php echo $row["id"]; ?>" class="boton editar">Editar</a>
+                                <a href="eliminar_oferta.php?id=<?php echo $row["id"]; ?>" class="boton eliminar">Eliminar</a>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
                     <tr>
-                        <td><?php echo $row["id"]; ?></td>
-                        <td><?php echo htmlspecialchars($row["titulo"]); ?></td>
-                        <td><?php echo htmlspecialchars($row["estado"]); ?></td>
-                        <td><?php echo htmlspecialchars($row["fecha_publicacion"]); ?></td>
-                        <td><?php echo htmlspecialchars($row["publicar_hasta"]); ?></td>
-                        <td>
-                            <a href="editar_oferta.php?id=<?php echo $row["id"]; ?>" class="boton editar">Editar</a>
-                            <a href="eliminar_oferta.php?id=<?php echo $row["id"]; ?>" class="boton eliminar">Eliminar</a>
-                        </td>
+                        <td colspan="6">No hay ofertas publicadas.</td>
                     </tr>
-                <?php endwhile; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>

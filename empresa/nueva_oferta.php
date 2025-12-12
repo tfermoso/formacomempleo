@@ -2,29 +2,32 @@
 session_start();
 require_once __DIR__ . "/../includes/functions.php";
 
-
 redirectIfNotLoggedIn();
-
 $conn = conectarBD();
+
 $mensaje = "";
 $tipoMensaje = "";
 
+// Procesar creación
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $idempresa = $_SESSION["idempresa"];
     $titulo = trim($_POST["titulo"] ?? "");
     $descripcion = trim($_POST["descripcion"] ?? "");
     $idsector = intval($_POST["idsector"] ?? 0);
     $idmodalidad = intval($_POST["idmodalidad"] ?? 0);
-    $estado = "publicada"; // por defecto
+    $estado = $_POST["estado"] ?? "borrador";
+    $publicar_hasta = $_POST["publicar_hasta"] ?? null;
 
-    if ($titulo === "" || $descripcion === "" || $idsector === 0 || $idmodalidad === 0) {
+    if ($publicar_hasta && $publicar_hasta < date('Y-m-d')) {
+        $mensaje = "La fecha 'publicar hasta' no puede ser anterior a hoy.";
+        $tipoMensaje = "error";
+    } elseif ($titulo === "" || $descripcion === "" || $idsector === 0 || $idmodalidad === 0) {
         $mensaje = "Todos los campos obligatorios deben completarse.";
         $tipoMensaje = "error";
     } else {
         $stmt = $conn->prepare("INSERT INTO ofertas 
-            (idempresa, idsector, idmodalidad, titulo, descripcion, estado, fecha_publicacion) 
-            VALUES (?, ?, ?, ?, ?, ?, CURDATE())");
-        $stmt->bind_param("iiisss", $idempresa, $idsector, $idmodalidad, $titulo, $descripcion, $estado);
+            (idempresa, idsector, idmodalidad, titulo, descripcion, requisitos, funciones, salario_min, salario_max, tipo_contrato, jornada, ubicacion, fecha_publicacion, publicar_hasta, estado) 
+            VALUES (?, ?, ?, ?, ?, '', '', 0, 0, '', '', '', CURDATE(), ?, ?)");
+        $stmt->bind_param("iiissss", $_SESSION["idempresa"], $idsector, $idmodalidad, $titulo, $descripcion, $publicar_hasta, $estado);
 
         if ($stmt->execute()) {
             $mensaje = "Oferta creada correctamente.";
@@ -37,9 +40,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-// Cargar sectores y modalidades para los select
-$sectores = $conn->query("SELECT id, nombre FROM sectores ORDER BY nombre ASC");
-$modalidades = $conn->query("SELECT id, nombre FROM modalidad ORDER BY nombre ASC");
+// Cargar sectores y modalidades con funciones
+$sectores = obtenerSectores($conn);
+$modalidades = obtenerModalidades($conn);
 
 $conn->close();
 ?>
@@ -55,11 +58,7 @@ $conn->close();
 <body>
     <h1>Crear nueva oferta</h1>
 
-    <?php if ($mensaje): ?>
-        <div class="alert <?php echo $tipoMensaje === 'success' ? 'alert-success' : 'alert-error'; ?>">
-            <?php echo htmlspecialchars($mensaje); ?>
-        </div>
-    <?php endif; ?>
+    <?php mostrarMensaje($mensaje, $tipoMensaje); ?>
 
     <form method="post">
         <label for="titulo">Título*</label>
@@ -70,7 +69,6 @@ $conn->close();
 
         <label for="idsector">Sector*</label>
         <select id="idsector" name="idsector" required>
-            <option value="">-- Selecciona sector --</option>
             <?php while ($s = $sectores->fetch_assoc()): ?>
                 <option value="<?php echo $s["id"]; ?>"><?php echo htmlspecialchars($s["nombre"]); ?></option>
             <?php endwhile; ?>
@@ -78,13 +76,24 @@ $conn->close();
 
         <label for="idmodalidad">Modalidad*</label>
         <select id="idmodalidad" name="idmodalidad" required>
-            <option value="">-- Selecciona modalidad --</option>
             <?php while ($m = $modalidades->fetch_assoc()): ?>
                 <option value="<?php echo $m["id"]; ?>"><?php echo htmlspecialchars($m["nombre"]); ?></option>
             <?php endwhile; ?>
         </select>
 
-        <button type="submit" class="boton nuevo">Guardar oferta</button>
+        <label for="estado">Estado*</label>
+        <select id="estado" name="estado" required>
+            <?php
+            $estados = ["borrador", "publicada", "pausada", "cerrada", "vencida"];
+            foreach ($estados as $e): ?>
+                <option value="<?php echo $e; ?>"><?php echo ucfirst($e); ?></option>
+            <?php endforeach; ?>
+        </select>
+
+        <label for="publicar_hasta">Publicar hasta*</label>
+        <input type="date" id="publicar_hasta" name="publicar_hasta" min="<?php echo date('Y-m-d'); ?>" required>
+
+        <button type="submit" class="boton nuevo">Crear oferta</button>
         <a href="dashboard.php" class="boton volver">Volver</a>
     </form>
 </body>
