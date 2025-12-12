@@ -1,7 +1,10 @@
 <?php
+session_start();
 require_once __DIR__ . "/includes/functions.php";
 
 $conn = conectarBD();
+
+//echo password_hash("1234", PASSWORD_DEFAULT);
 
 
 $mensaje = "";
@@ -41,6 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php if ($mensaje): ?>
         <div class="alert alert-error"><?php echo htmlspecialchars($mensaje); ?></div>
     <?php endif; ?>
+    <?php if (isset($_GET["msg"])): ?>
+        <div class="alert alert-success">
+            <?php echo htmlspecialchars($_GET["msg"]); ?>
+        </div>
+    <?php endif; ?>
+
     <form method="post">
         <label>Email: <input type="email" name="email" required></label><br><br>
         <label>Password: <input type="password" name="password" required></label><br><br>

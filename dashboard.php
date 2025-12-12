@@ -4,9 +4,27 @@ require_once __DIR__ . "/includes/functions.php";
 
 redirectIfNotLoggedIn();
 
+// Crear conexión antes de cualquier consulta
 $conn = conectarBD();
-$idempresa = $_SESSION["idempresa"];
 
+// Obtener nombre del usuario logueado
+$stmt = $conn->prepare("SELECT nombre, apellidos FROM usuarios WHERE id = ?");
+$stmt->bind_param("i", $_SESSION["idusuario"]);
+$stmt->execute();
+$resultadoUsuario = $stmt->get_result();
+$usuario = $resultadoUsuario->fetch_assoc();
+$stmt->close();
+
+// Seguridad: si no se encuentra el usuario por alguna razón
+if (!$usuario) {
+    // Opcional: redirigir al logout si falta coherencia
+    header("Location: logout.php");
+    exit;
+}
+
+$idempresa = intval($_SESSION["idempresa"]);
+
+// Cargar ofertas de la empresa
 $stmt = $conn->prepare("SELECT id, titulo, estado, fecha_publicacion, publicar_hasta 
                         FROM ofertas 
                         WHERE idempresa = ? AND deleted_at IS NULL");
@@ -31,10 +49,15 @@ $resultado = $stmt->get_result();
     <?php endif; ?>
 
     <h1>Mis Ofertas</h1>
+    <p class="bienvenida">
+        Bienvenido, <?php echo htmlspecialchars($usuario["nombre"] . " " . $usuario["apellidos"]); ?>
+    </p>
+
     <p class="acciones-centradas">
         <a href="nueva_oferta.php" class="boton nuevo">Crear nueva oferta</a>
         <a href="logout.php" class="boton volver">Cerrar sesión</a>
     </p>
+
     <div class="table-container">
         <table>
             <thead>
