@@ -70,7 +70,9 @@ $conn->close();
                             <td>
                                 <a href="editar_oferta.php?id=<?php echo $row["id"]; ?>" class="boton editar">Editar</a>
                                 <a href="eliminar_oferta.php?id=<?php echo $row["id"]; ?>" class="boton eliminar">Eliminar</a>
+                                <a href="candidatos_oferta.php?id=<?php echo $row["id"]; ?>" class="boton">Ver candidatos</a>
                             </td>
+
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
