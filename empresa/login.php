@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . "/includes/functions.php";
+require_once __DIR__ . "/../includes/functions.php";
+
 
 $conn = conectarBD();
 
@@ -36,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Login Empresa</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>

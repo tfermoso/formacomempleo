@@ -1,6 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . "/includes/functions.php";
+require_once __DIR__ . "/../includes/functions.php";
+
 
 redirectIfNotLoggedIn();
 
@@ -74,7 +75,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>Editar Oferta</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
