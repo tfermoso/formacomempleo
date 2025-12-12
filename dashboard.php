@@ -24,6 +24,12 @@ $resultado = $stmt->get_result();
 </head>
 
 <body>
+    <?php if (isset($_GET["msg"])): ?>
+        <div class="alert <?php echo $_GET["type"] === 'success' ? 'alert-success' : 'alert-error'; ?>">
+            <?php echo htmlspecialchars($_GET["msg"]); ?>
+        </div>
+    <?php endif; ?>
+
     <h1>Mis Ofertas</h1>
     <p class="acciones-centradas">
         <a href="nueva_oferta.php" class="boton nuevo">Crear nueva oferta</a>
