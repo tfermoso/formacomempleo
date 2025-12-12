@@ -23,10 +23,13 @@ function isLoggedIn()
 function redirectIfNotLoggedIn()
 {
     if (!isset($_SESSION["idusuario"]) || !isset($_SESSION["idempresa"])) {
-        header("Location: login.php?msg=" . urlencode("Debes iniciar sesión.") . "&type=error");
+        $_SESSION["flash_msg"] = "Debes iniciar sesión.";
+        $_SESSION["flash_type"] = "error";
+        header("Location: login.php");
         exit;
     }
 }
+
 
 // Obtener datos del usuario logueado
 function obtenerUsuarioLogueado($conn, $idusuario)
