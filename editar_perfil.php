@@ -26,8 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'telefono'  => $_POST['telefono'],
         'email'     => $_POST['email'],
         'linkedin'  => $_POST['linkedin'],
-        'github'    => $_POST['github'],
-        'titulo'    => $_POST['titulo'],
+        'github'    => $_POST['web'],
         'cp'        => $_POST['cp'],
         'ciudad'    => $_POST['ciudad'],
         'provincia' => $_POST['provincia']
@@ -89,10 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <input type="text" name="linkedin" value="<?php echo $candidato['linkedin']; ?>"><br><br>
 
     <label>GitHub:</label><br>
-    <input type="text" name="github" value="<?php echo $candidato['github']; ?>"><br><br>
-
-    <label>Título profesional:</label><br>
-    <input type="text" name="titulo" value="<?php echo $candidato['titulo']; ?>"><br><br>
+    <input type="text" name="web" value="<?php echo $candidato['web']; ?>"><br><br>
 
     <label>Código postal:</label><br>
     <input type="text" name="cp" value="<?php echo $candidato['cp']; ?>"><br><br>

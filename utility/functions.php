@@ -110,8 +110,7 @@ function actualizarCandidato(mysqli $conn, int $id, array $data) {
             telefono = ?,
             email = ?,
             linkedin = ?,
-            github = ?,
-            titulo = ?,
+            web = ?,
             cp = ?,
             ciudad = ?,
             provincia = ?
@@ -120,14 +119,13 @@ function actualizarCandidato(mysqli $conn, int $id, array $data) {
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param(
-        "ssssssssssi",
+        "ssssssissi",
         $data['nombre'],
         $data['apellidos'],
         $data['telefono'],
         $data['email'],
         $data['linkedin'],
-        $data['github'],
-        $data['titulo'],
+        $data['web'],
         $data['cp'],
         $data['ciudad'],
         $data['provincia'],

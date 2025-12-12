@@ -88,15 +88,6 @@ $ofertasNoInscritas = getOfertasNoInscritas($conn, $idcandidato);
 </head>
 <body>
 
-<!-- ✅ FOTO + NOMBRE + BOTÓN EDITAR PERFIL -->
-<div class="perfil">
-    <img src="<?php echo $foto; ?>" alt="Foto de perfil">
-    <div>
-        <h1><?php echo $candidato['nombre'] . " " . $candidato['apellidos']; ?></h1>
-        <a href="editar_perfil.php"><button>Editar perfil</button></a>
-    </div>
-</div>
-
 <?php if ($mensaje): ?>
     <p class="mensaje"><?php echo $mensaje; ?></p>
 <?php endif; ?>
