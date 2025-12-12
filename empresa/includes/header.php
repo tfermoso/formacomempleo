@@ -48,8 +48,8 @@ $usuarioNombre = $_SESSION["usuario_nombre"] ?? null;
 
                 <?php else: ?>
 
-                    <li><a href="../empresa/login.php">Iniciar sesión</a></li>
-                    <li><a href="../empresa/registro.php">Registrarse</a></li>
+                    <li><a href="./login.php">Iniciar sesión</a></li>
+                    <li><a href="./registro.php">Registrarse</a></li>
 
                 <?php endif; ?>
 
