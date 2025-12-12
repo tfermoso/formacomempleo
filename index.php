@@ -57,16 +57,15 @@ $result = $conexion->query($sql);
       <?php while ($row = $result->fetch_assoc()): ?>
         <article class="offer-card">
           <h3><?= htmlspecialchars($row['titulo']) ?></h3>
-          <p class="company">Empresa: <?= htmlspecialchars($row['empresa']) ?></p>
-          <p class="sector">Sector: <?= htmlspecialchars($row['sector']) ?></p>
-          <a href="oferta.php?id=<?= $row['id'] ?>" class="btn btn-primary">Ver oferta</a>
+          <p class="company"><?= htmlspecialchars($row['empresa']) ?></p>
+          <a href="#por-definir" class="btn btn-primary">Ver oferta</a>
         </article>
       <?php endwhile; ?>
     <?php else: ?>
       <p>No hay ofertas publicadas en este momento.</p>
     <?php endif; ?>
   </div>
-  <a href="#" class="btn btn-secondary">Ver todas las ofertas</a>
+  <a href="#por-definir" class="btn btn-secondary-inverted">Ver todas las ofertas</a>
 </section>
 
 <?php include 'includes/footer.php'; ?>

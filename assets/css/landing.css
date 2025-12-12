@@ -213,12 +213,29 @@ body {
 }
 
 .btn-secondary {
-  background-color: #444;
+  background-color: #2b4b7b;
   color: #fff;
 }
 
 .btn-secondary:hover {
   background-color: #222;
+}
+
+.btn-secondary-inverted {
+  background-color: #fff;        /* fondo claro */
+  color: #2b4b7b;                /* azul corporativo como texto */
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid #fff;        /* borde blanco para integrarse en fondos oscuros */
+}
+
+.btn-secondary-inverted:hover {
+  background-color: #f0f0f0;     /* gris muy claro en hover */
+  color: #1a2e4f;                /* azul más oscuro para contraste */
+  border-color: #f0f0f0;
 }
 
 /* Footer */
@@ -230,21 +247,40 @@ body {
   font-size: 0.9rem;
 }
 
-/* Últimas ofertas */
 .latest-offers {
-  background-color: #fff;
+  position: relative;
   padding: 3rem 1rem;
   text-align: center;
+  color: #fff;
+  background: url("../img/cropped-background.jpg") center/cover no-repeat;
+  background-attachment: fixed;
+}
+
+.latest-offers::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(43, 75, 123, 0.75);
+  z-index: 0;
 }
 
 .latest-offers h2 {
+  position: relative;
+  z-index: 1;
   font-size: 1.4rem;
   margin-bottom: 2rem;
-  color: rgb(43, 75, 123);
   font-weight: 700;
 }
 
+.latest-offers .btn-secondary-inverted {
+  position: relative;
+  z-index: 1;
+  margin-top: 2rem;
+}
+
 .offers-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
@@ -252,10 +288,18 @@ body {
   margin: 0 auto;
 }
 
+.offers-grid,
+.latest-offers h2,
+.latest-offers .btn {
+  position: relative;
+  z-index: 1; 
+}
+
 .offer-card {
-  background: #fdfdfd;
+  background: rgba(255, 255, 255, 0.80); 
+  backdrop-filter: blur(8px);
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   padding: 1.5rem;
   text-align: left;
 }
@@ -276,6 +320,7 @@ body {
 .offer-card .btn {
   margin-top: 0.5rem;
   font-size: 0.9rem;
+  z-index: 1;
 }
 
 /* Responsive slide-in menu */
