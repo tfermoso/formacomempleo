@@ -36,6 +36,10 @@ body {
 }
 
 /* Navegación */
+.main-nav {
+  margin-left: auto;
+}
+
 .main-nav ul {
   list-style: none;
   display: flex;
@@ -71,6 +75,7 @@ body {
 /* Hero principal */
 .hero {
   background: url("../img/cropped-background.jpg") center/cover no-repeat;
+  background-attachment: fixed; /* clave para el efecto parallax */
   height: 60vh;
   position: relative;
   display: flex;
@@ -81,9 +86,9 @@ body {
 
 .hero-overlay {
   background-color: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(5px);
   color: #fff;
   padding: 2rem;
-  border-radius: 8px;
 }
 
 .hero-title {
@@ -103,41 +108,67 @@ body {
   font-weight: 400;
 }
 
-/* Sección opciones */
 .options {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  padding: 3rem 1rem;
-  background-color: #fff;
+  width: 100%;
 }
 
-.option-card {
-  background: #fdfdfd;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
-  max-width: 300px;
+.option-block {
+  flex: 1 1 50%;
+  min-height: 300px;
+  padding: 3rem 2rem;
   text-align: center;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.option-card h2 {
-  font-size: 1.3rem;
+.option-block img {
+  width: 128px;
+  height: 128px;
+  margin-bottom: 1rem;
+}
+
+.option-block h2 {
+  font-size: 1.6rem;
   margin-bottom: 0.5rem;
-  color: rgb(43, 75, 123);
   font-weight: 700;
 }
 
-.option-card p {
-  font-size: 1rem;
+.option-block p {
+  font-size: 1.1rem;
   margin-bottom: 1rem;
-  font-weight: 400;
+}
+
+.option-block .btn-light {
+  background-color: #03A9F4;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.option-block .btn-light:hover {
+  background-color: #0288d1;
+}
+
+/* Variantes de azul corporativo */
+.option-block.empresas {
+  background-color: #1A2E4F; /* azul corporativo principal */
+}
+
+.option-block.candidatos {
+  background-color: rgb(43, 75, 123); /* variante más oscura */
 }
 
 /* Cursos */
 .courses {
-  background-color: #eef2f7;
+  background-color: #f0f0f0;
   text-align: center;
   padding: 3rem 1rem;
 }
@@ -166,7 +197,7 @@ body {
 }
 
 .btn-primary {
-  background-color: rgb(43, 75, 123);
+  background-color: #03A9F4;
   color: #fff;
 }
 
@@ -319,13 +350,8 @@ body {
     display: block;
   }
 
-  .options {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .option-card {
-    max-width: 90%;
+  .option-block {
+    flex: 1 1 100%;
   }
 
   .hero {

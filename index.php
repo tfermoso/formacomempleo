@@ -4,22 +4,24 @@
 <section class="hero">
   <div class="hero-overlay">
     <h1 class="hero-title">Agencia de colocación nº 1200000119</h1>
-    <p class="hero-subtitle">Próximamente... Inscríbete en nuestra Agencia de Colocación</p>
+    <p class="hero-subtitle">Inscríbete en nuestra Agencia de Colocación</p>
     <p class="hero-text">Te ayudaremos a encontrar ofertas acordes a tu perfil</p>
   </div>
 </section>
 
 <!-- Opciones principales -->
 <section class="options">
-  <div class="option-card">
+  <div class="option-block empresas">
+    <img src="assets/img/cropped-empleado-1.png" alt="Empresas">
     <h2>Busco personal</h2>
     <p>¿Necesitas ampliar la plantilla de tu empresa?</p>
-    <a href="empresas.php" class="btn btn-primary">ENVÍANOS TU OFERTA</a>
+    <a href="empresa/" class="btn btn-light">ENVÍANOS TU OFERTA</a>
   </div>
-  <div class="option-card">
+  <div class="option-block candidatos">
+    <img src="assets/img/cropped-candidato-1.png" alt="Candidatos">
     <h2>Busco empleo</h2>
     <p>Inscríbete para enviarnos tu curriculum</p>
-    <a href="candidatos.php" class="btn btn-primary">INSCRÍBETE AHORA</a>
+    <a href="candidato/" class="btn btn-light">INSCRÍBETE AHORA</a>
   </div>
 </section>
 
@@ -48,7 +50,7 @@ $sql = "
 
 $result = $conexion->query($sql);
 ?>
-<section class="latest-offers">
+<section class="latest-offers" id="ultimas-ofertas">
   <h2>Últimas ofertas publicadas</h2>
   <div class="offers-grid">
     <?php if ($result && $result->num_rows > 0): ?>
@@ -64,6 +66,7 @@ $result = $conexion->query($sql);
       <p>No hay ofertas publicadas en este momento.</p>
     <?php endif; ?>
   </div>
+  <a href="#" class="btn btn-secondary">Ver todas las ofertas</a>
 </section>
 
 <?php include 'includes/footer.php'; ?>
