@@ -2,18 +2,35 @@
 session_start();
 require_once "../../../conexion.php";
 
-if (!isset($_SESSION['admin_login'])) { header('Location: ../index.php'); exit; }
+if (!isset($_SESSION['admin_login'])) {
+    header('Location: ../index.php');
+    exit;
+}
 
-if (!isset($_GET['id'])) { header('Location: ../../dashboard.php?tab=candidatos'); exit; }
-$id = (int)$_GET['id'];
+if (!isset($_GET['id'])) {
+    header('Location: ../../dashboard.php?tab=candidatos');
+    exit;
+}
 
-$stmt = $pdo->prepare("SELECT * FROM candidatos WHERE id=?");
-$stmt->execute([$id]);
-$candidato = $stmt->fetch(PDO::FETCH_ASSOC);
-if (!$candidato) { header('Location: ../../dashboard.php?tab=candidatos'); exit; }
+$id = (int) $_GET['id'];
+
+/* ================= OBTENER CANDIDATO ================= */
+$stmt = $db->prepare("SELECT * FROM candidatos WHERE id = ? AND deleted_at IS NULL");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$candidato = $result->fetch_assoc();
+
+if (!$candidato) {
+    header('Location: ../../dashboard.php?tab=candidatos');
+    exit;
+}
 
 $error = '';
+
+/* ================= ACTUALIZAR ================= */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     $dni = trim($_POST['dni']);
     $nombre = trim($_POST['nombre']);
     $apellidos = trim($_POST['apellidos']);
@@ -31,23 +48,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($nombre) || empty($apellidos) || empty($email)) {
         $error = "Nombre, apellidos y email son obligatorios.";
     } else {
+
         if (!empty($password)) {
+            // Actualizar CON contraseña
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("UPDATE candidatos SET dni=?, nombre=?, apellidos=?, telefono=?, email=?, password_hash=?, linkedin=?, web=?, direccion=?, cp=?, ciudad=?, provincia=?, fecha_nacimiento=? WHERE id=?");
-            $stmt->execute([$dni,$nombre,$apellidos,$telefono,$email,$password_hash,$linkedin,$web,$direccion,$cp,$ciudad,$provincia,$fecha_nacimiento,$id]);
+
+            $stmt = $db->prepare("
+                UPDATE candidatos 
+                SET dni=?, nombre=?, apellidos=?, telefono=?, email=?, password_hash=?,
+                    linkedin=?, web=?, direccion=?, cp=?, ciudad=?, provincia=?, fecha_nacimiento=?
+                WHERE id=?
+            ");
+
+            $stmt->bind_param(
+                "sssssssssssssi",
+                $dni, $nombre, $apellidos, $telefono, $email, $password_hash,
+                $linkedin, $web, $direccion, $cp, $ciudad, $provincia,
+                $fecha_nacimiento, $id
+            );
+
         } else {
-            $stmt = $pdo->prepare("UPDATE candidatos SET dni=?, nombre=?, apellidos=?, telefono=?, email=?, linkedin=?, web=?, direccion=?, cp=?, ciudad=?, provincia=?, fecha_nacimiento=? WHERE id=?");
-            $stmt->execute([$dni,$nombre,$apellidos,$telefono,$email,$linkedin,$web,$direccion,$cp,$ciudad,$provincia,$fecha_nacimiento,$id]);
+            // Actualizar SIN contraseña
+            $stmt = $db->prepare("
+                UPDATE candidatos 
+                SET dni=?, nombre=?, apellidos=?, telefono=?, email=?,
+                    linkedin=?, web=?, direccion=?, cp=?, ciudad=?, provincia=?, fecha_nacimiento=?
+                WHERE id=?
+            ");
+
+            $stmt->bind_param(
+                "ssssssssssssi",
+                $dni, $nombre, $apellidos, $telefono, $email,
+                $linkedin, $web, $direccion, $cp, $ciudad,
+                $provincia, $fecha_nacimiento, $id
+            );
         }
+
+        $stmt->execute();
         header("Location: ../../dashboard.php?tab=candidatos");
         exit;
     }
 }
 ?>
+
 <link rel="stylesheet" href="../styles.css">
+
 <form method="POST">
     <h2>Editar Candidato</h2>
-    <?php if($error) echo "<p style='color:red;'>$error</p>"; ?>
+
+    <?php if ($error): ?>
+        <p style="color:red;"><?= htmlspecialchars($error) ?></p>
+    <?php endif; ?>
+
     Nombre*: <input type="text" name="nombre" value="<?= htmlspecialchars($candidato['nombre']) ?>"><br>
     Apellidos*: <input type="text" name="apellidos" value="<?= htmlspecialchars($candidato['apellidos']) ?>"><br>
     DNI: <input type="text" name="dni" value="<?= htmlspecialchars($candidato['dni']) ?>"><br>
@@ -61,6 +113,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     Ciudad: <input type="text" name="ciudad" value="<?= htmlspecialchars($candidato['ciudad']) ?>"><br>
     Provincia: <input type="text" name="provincia" value="<?= htmlspecialchars($candidato['provincia']) ?>"><br>
     Fecha de nacimiento: <input type="date" name="fecha_nacimiento" value="<?= htmlspecialchars($candidato['fecha_nacimiento']) ?>"><br>
+
     <button type="submit">Actualizar</button>
     <a href="../../dashboard.php?tab=candidatos">Cancelar</a>
 </form>
+

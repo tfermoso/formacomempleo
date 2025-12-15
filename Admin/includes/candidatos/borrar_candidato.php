@@ -1,14 +1,28 @@
 <?php
 session_start();
-require_once "../../../conexion.php";
+require_once "../../../conexion.php"; // usa $db (mysqli)
 
-if (!isset($_SESSION['admin_login'])) { header('Location: ../l../ogin.php'); exit; }
+// Verificar sesión admin
+if (!isset($_SESSION['admin_login'])) {
+    header('Location: ../../login.php');
+    exit;
+}
 
-if (!isset($_GET['id'])) { header('Location: ../../dashboard.php?tab=candidatos'); exit; }
+// Verificar ID
+if (!isset($_GET['id'])) {
+    header('Location: ../../dashboard.php?tab=candidatos');
+    exit;
+}
+
 $id = (int)$_GET['id'];
 
-$stmt = $pdo->prepare("DELETE FROM candidatos WHERE id=?");
-$stmt->execute([$id]);
+// Borrado lógico (NO se elimina el registro)
+$stmt = $db->prepare("UPDATE candidatos SET deleted_at = NOW() WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
 
+$stmt->close();
+
+// Volver al dashboard
 header("Location: ../../dashboard.php?tab=candidatos");
 exit;

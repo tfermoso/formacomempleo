@@ -21,11 +21,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($cif) || empty($nombre) || empty($email)) {
         $error = "CIF, nombre y email son obligatorios";
     } else {
-        $stmt = $pdo->prepare("INSERT INTO empresas (cif, nombre, telefono, email_contacto, direccion, cp, ciudad, provincia)
-                               VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$cif, $nombre, $telefono, $email, $direccion, $cp, $ciudad, $provincia]);
-        header("Location: ../../dashboard.php?tab=empresas");
-        exit;
+        // Preparar statement mysqli
+        $stmt = $db->prepare("INSERT INTO empresas (cif, nombre, telefono, email_contacto, direccion, cp, ciudad, provincia) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssss", $cif, $nombre, $telefono, $email, $direccion, $cp, $ciudad, $provincia);
+
+        if ($stmt->execute()) {
+            header("Location: ../../dashboard.php?tab=empresas");
+            exit;
+        } else {
+            $error = "Error al crear la empresa: " . $stmt->error;
+        }
+
+        $stmt->close();
     }
 }
 ?>

@@ -2,13 +2,11 @@
 session_start();
 require_once "../../../conexion.php";
 
-// Verificar si el usuario ha iniciado sesión como administrador
 if (!isset($_SESSION['admin_login'])) {
     header('Location: ../../login.php');
     exit;
 }
 
-// Verificar si se ha pasado el ID del usuario a eliminar
 if (!isset($_GET['id'])) {
     header('Location: ../../dashboard.php?tab=usuarios');
     exit;
@@ -16,21 +14,24 @@ if (!isset($_GET['id'])) {
 
 $id = (int)$_GET['id'];
 
-// Obtener el ID del administrador actual (el que está logueado)
-$admin_id = $_SESSION['admin_login'];
+// Comprobar si es admin
+$stmt = $db->prepare("SELECT is_admin FROM usuarios WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$stmt->bind_result($is_admin);
+$stmt->fetch();
+$stmt->close();
 
-// Verificar si el usuario a eliminar es el mismo que el administrador
-if ($id == $admin_id) {
-    // Mostrar un mensaje de error si se intenta eliminar al administrador
-    echo '<p style="color: red;">No puedes eliminar tu propia cuenta de administrador.</p>';
-    echo '<a href="../../dashboard.php?tab=usuarios">Volver al Dashboard</a>';
+if ($is_admin) {
+    echo "<script>alert('No se puede eliminar un administrador.'); window.location.href='../../dashboard.php?tab=usuarios';</script>";
     exit;
 }
 
-// Si el usuario no es el administrador, proceder con la eliminación
-$stmt = $pdo->prepare("DELETE FROM usuarios WHERE id=?");
-$stmt->execute([$id]);
+// Borrado lógico
+$stmt = $db->prepare("UPDATE usuarios SET deleted_at = NOW() WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$stmt->close();
 
 header("Location: ../../dashboard.php?tab=usuarios");
 exit;
-?>

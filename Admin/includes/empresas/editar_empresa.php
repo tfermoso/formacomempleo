@@ -2,16 +2,30 @@
 session_start();
 require_once "../../../conexion.php";
 
-if (!isset($_SESSION['admin_login'])) { header('Location: ../../index.php'); exit; }
+if (!isset($_SESSION['admin_login'])) { 
+    header('Location: ../../index.php'); 
+    exit; 
+}
 
-if (!isset($_GET['id'])) { header('Location: ../../dashboard.php?tab=empresas'); exit; }
+if (!isset($_GET['id'])) { 
+    header('Location: ../../dashboard.php?tab=empresas'); 
+    exit; 
+}
+
 $id = (int)$_GET['id'];
 
-$stmt = $pdo->prepare("SELECT * FROM empresas WHERE id = ?");
-$stmt->execute([$id]);
-$empresa = $stmt->fetch(PDO::FETCH_ASSOC);
+// Preparar y ejecutar SELECT
+$stmt = $db->prepare("SELECT * FROM empresas WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$empresa = $result->fetch_assoc();
+$stmt->close();
 
-if (!$empresa) { header('Location: ../../dashboard.php?tab=empresas'); exit; }
+if (!$empresa) { 
+    header('Location: ../../dashboard.php?tab=empresas'); 
+    exit; 
+}
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -27,10 +41,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($cif) || empty($nombre) || empty($email)) {
         $error = "CIF, nombre y email son obligatorios";
     } else {
-        $stmt = $pdo->prepare("UPDATE empresas SET cif=?, nombre=?, telefono=?, email_contacto=?, direccion=?, cp=?, ciudad=?, provincia=? WHERE id=?");
-        $stmt->execute([$cif,$nombre,$telefono,$email,$direccion,$cp,$ciudad,$provincia,$id]);
-        header("Location: ../../dashboard.php?tab=empresas");
-        exit;
+        // Preparar y ejecutar UPDATE
+        $stmt = $db->prepare("UPDATE empresas SET cif=?, nombre=?, telefono=?, email_contacto=?, direccion=?, cp=?, ciudad=?, provincia=? WHERE id=?");
+        $stmt->bind_param("ssssssssi", $cif, $nombre, $telefono, $email, $direccion, $cp, $ciudad, $provincia, $id);
+
+        if ($stmt->execute()) {
+            header("Location: ../../dashboard.php?tab=empresas");
+            exit;
+        } else {
+            $error = "Error al actualizar la empresa: " . $stmt->error;
+        }
+
+        $stmt->close();
     }
 }
 ?>

@@ -11,15 +11,19 @@ if (!isset($_GET['id'])) { header('Location: ../../dashboard.php?tab=ofertas'); 
 $id = (int)$_GET['id'];
 
 // Obtener la oferta
-$stmt = $pdo->prepare("SELECT * FROM ofertas WHERE id=?");
-$stmt->execute([$id]);
-$oferta = $stmt->fetch(PDO::FETCH_ASSOC);
+$stmt = $db->prepare("SELECT * FROM ofertas WHERE id=?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$oferta = $result->fetch_assoc();
+$stmt->close();
+
 if (!$oferta) { header('Location: ../../dashboard.php?tab=ofertas'); exit; }
 
 // Listas
-$empresas = $pdo->query("SELECT id, nombre FROM empresas")->fetchAll(PDO::FETCH_ASSOC);
-$sectores = $pdo->query("SELECT id, nombre FROM sectores")->fetchAll(PDO::FETCH_ASSOC);
-$modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FETCH_ASSOC);
+$empresas = $db->query("SELECT id, nombre FROM empresas")->fetch_all(MYSQLI_ASSOC);
+$sectores = $db->query("SELECT id, nombre FROM sectores")->fetch_all(MYSQLI_ASSOC);
+$modalidades = $db->query("SELECT id, nombre FROM modalidad")->fetch_all(MYSQLI_ASSOC);
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -28,8 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idmodalidad = $_POST['idmodalidad'];
     $titulo = trim($_POST['titulo']);
     $descripcion = trim($_POST['descripcion']);
-    $salario_min = $_POST['salario_min'] ?: null;
-    $salario_max = $_POST['salario_max'] ?: null;
+    $salario_min = $_POST['salario_min'] !== '' ? $_POST['salario_min'] : null;
+    $salario_max = $_POST['salario_max'] !== '' ? $_POST['salario_max'] : null;
     $tipo_contrato = trim($_POST['tipo_contrato']);
     $jornada = trim($_POST['jornada']);
     $ubicacion = trim($_POST['ubicacion']);
@@ -37,10 +41,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($idempresa) || empty($idsector) || empty($idmodalidad) || empty($titulo) || empty($descripcion)) {
         $error = "Empresa, sector, modalidad, título y descripción son obligatorios.";
     } else {
-        $stmt = $pdo->prepare("UPDATE ofertas SET idempresa=?, idsector=?, idmodalidad=?, titulo=?, descripcion=?, salario_min=?, salario_max=?, tipo_contrato=?, jornada=?, ubicacion=? WHERE id=?");
-        $stmt->execute([$idempresa,$idsector,$idmodalidad,$titulo,$descripcion,$salario_min,$salario_max,$tipo_contrato,$jornada,$ubicacion,$id]);
-        header("Location: ../../dashboard.php?tab=ofertas");
-        exit;
+        $stmt = $db->prepare("UPDATE ofertas SET idempresa=?, idsector=?, idmodalidad=?, titulo=?, descripcion=?, salario_min=?, salario_max=?, tipo_contrato=?, jornada=?, ubicacion=? WHERE id=?");
+        $stmt->bind_param(
+            "iiissdssssi",
+            $idempresa,
+            $idsector,
+            $idmodalidad,
+            $titulo,
+            $descripcion,
+            $salario_min,
+            $salario_max,
+            $tipo_contrato,
+            $jornada,
+            $ubicacion,
+            $id
+        );
+
+        if ($stmt->execute()) {
+            header("Location: ../../dashboard.php?tab=ofertas");
+            exit;
+        } else {
+            $error = "Error al actualizar la oferta: " . $stmt->error;
+        }
+
+        $stmt->close();
     }
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../conexion.php"; // archivo con $pdo
+require_once "../conexion.php"; // usa $db (mysqli)
 
 // Verificar que el admin esté logueado
 if (!isset($_SESSION['admin_login'])) {
@@ -8,7 +8,7 @@ if (!isset($_SESSION['admin_login'])) {
     exit;
 }
 
-// Función para manejar la activación de pestañas
+// Pestaña activa
 $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'empresas';
 ?>
 
@@ -18,7 +18,6 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'empresas';
     <meta charset="UTF-8">
     <title>Dashboard Admin</title>
     <link rel="stylesheet" href="includes/styles.css">
-    
 </head>
 <body>
 
@@ -33,19 +32,20 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'empresas';
 </nav>
 
 <?php
-// ===================== Empresas =====================
+// ===================== EMPRESAS =====================
 if ($activeTab === 'empresas') {
     echo '<h2>Empresas</h2>';
     echo '<a href="includes/empresas/crear_empresa.php" class="actions a create">➕ Crear Empresa</a><br><br>';
 
-    $stmt = $pdo->query("SELECT * FROM empresas");
-    $empresas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $result = $db->query("SELECT * FROM empresas WHERE deleted_at IS NULL");
 
-    if ($empresas) {
-        echo '<table><tr>
-            <th>ID</th><th>CIF</th><th>Nombre</th><th>Teléfono</th><th>Email Contacto</th><th>Acciones</th>
-        </tr>';
-        foreach ($empresas as $e) {
+    if ($result && $result->num_rows > 0) {
+        echo '<table>
+            <tr>
+                <th>ID</th><th>CIF</th><th>Nombre</th><th>Teléfono</th><th>Email Contacto</th><th>Acciones</th>
+            </tr>';
+
+        while ($e = $result->fetch_assoc()) {
             echo '<tr>
                 <td>'.$e['id'].'</td>
                 <td>'.$e['cif'].'</td>
@@ -54,7 +54,8 @@ if ($activeTab === 'empresas') {
                 <td>'.$e['email_contacto'].'</td>
                 <td class="actions">
                     <a href="includes/empresas/editar_empresa.php?id='.$e['id'].'" class="edit">✏ Editar</a>
-                    <a href="includes/empresas/borrar_empresa.php?id='.$e['id'].'" class="delete" onclick="return confirm(\'¿Seguro que quieres eliminar esta empresa?\')">🗑 Borrar</a>
+                    <a href="includes/empresas/borrar_empresa.php?id='.$e['id'].'" class="delete"
+                       onclick="return confirm(\'¿Seguro que quieres eliminar esta empresa?\')">🗑 Borrar</a>
                 </td>
             </tr>';
         }
@@ -64,23 +65,29 @@ if ($activeTab === 'empresas') {
     }
 }
 
-// ===================== Ofertas =====================
+// ===================== OFERTAS =====================
 if ($activeTab === 'ofertas') {
     echo '<h2>Ofertas</h2>';
     echo '<a href="includes/ofertas/crear_oferta.php" class="actions a create">➕ Crear Oferta</a><br><br>';
 
-    $stmt = $pdo->query("SELECT ofertas.*, empresas.nombre AS empresa_nombre, sectores.nombre AS sector_nombre, modalidad.nombre AS modalidad_nombre
-                         FROM ofertas
-                         JOIN empresas ON ofertas.idempresa = empresas.id
-                         JOIN sectores ON ofertas.idsector = sectores.id
-                         JOIN modalidad ON ofertas.idmodalidad = modalidad.id");
-    $ofertas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $sql = "
+        SELECT o.*, e.nombre AS empresa_nombre, s.nombre AS sector_nombre, m.nombre AS modalidad_nombre
+        FROM ofertas o
+        JOIN empresas e ON o.idempresa = e.id
+        JOIN sectores s ON o.idsector = s.id
+        JOIN modalidad m ON o.idmodalidad = m.id
+        WHERE o.deleted_at IS NULL
+    ";
 
-    if ($ofertas) {
-        echo '<table><tr>
-            <th>ID</th><th>Título</th><th>Empresa</th><th>Sector</th><th>Modalidad</th><th>Acciones</th>
-        </tr>';
-        foreach ($ofertas as $o) {
+    $result = $db->query($sql);
+
+    if ($result && $result->num_rows > 0) {
+        echo '<table>
+            <tr>
+                <th>ID</th><th>Título</th><th>Empresa</th><th>Sector</th><th>Modalidad</th><th>Acciones</th>
+            </tr>';
+
+        while ($o = $result->fetch_assoc()) {
             echo '<tr>
                 <td>'.$o['id'].'</td>
                 <td>'.$o['titulo'].'</td>
@@ -89,7 +96,8 @@ if ($activeTab === 'ofertas') {
                 <td>'.$o['modalidad_nombre'].'</td>
                 <td class="actions">
                     <a href="includes/ofertas/editar_oferta.php?id='.$o['id'].'" class="edit">✏ Editar</a>
-                    <a href="includes/ofertas/borrar_oferta.php?id='.$o['id'].'" class="delete" onclick="return confirm(\'¿Seguro que quieres eliminar esta oferta?\')">🗑 Borrar</a>
+                    <a href="includes/ofertas/borrar_oferta.php?id='.$o['id'].'" class="delete"
+                       onclick="return confirm(\'¿Seguro que quieres eliminar esta oferta?\')">🗑 Borrar</a>
                 </td>
             </tr>';
         }
@@ -99,19 +107,20 @@ if ($activeTab === 'ofertas') {
     }
 }
 
-// ===================== Candidatos =====================
+// ===================== CANDIDATOS =====================
 if ($activeTab === 'candidatos') {
     echo '<h2>Candidatos</h2>';
     echo '<a href="includes/candidatos/crear_candidato.php" class="actions a create">➕ Crear Candidato</a><br><br>';
 
-    $stmt = $pdo->query("SELECT * FROM candidatos");
-    $candidatos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $result = $db->query("SELECT * FROM candidatos WHERE deleted_at IS NULL");
 
-    if ($candidatos) {
-        echo '<table><tr>
-            <th>ID</th><th>Nombre</th><th>Apellidos</th><th>Email</th><th>Teléfono</th><th>Acciones</th>
-        </tr>';
-        foreach ($candidatos as $c) {
+    if ($result && $result->num_rows > 0) {
+        echo '<table>
+            <tr>
+                <th>ID</th><th>Nombre</th><th>Apellidos</th><th>Email</th><th>Teléfono</th><th>Acciones</th>
+            </tr>';
+
+        while ($c = $result->fetch_assoc()) {
             echo '<tr>
                 <td>'.$c['id'].'</td>
                 <td>'.$c['nombre'].'</td>
@@ -120,7 +129,8 @@ if ($activeTab === 'candidatos') {
                 <td>'.$c['telefono'].'</td>
                 <td class="actions">
                     <a href="includes/candidatos/editar_candidato.php?id='.$c['id'].'" class="edit">✏ Editar</a>
-                    <a href="includes/candidatos/borrar_candidato.php?id='.$c['id'].'" class="delete" onclick="return confirm(\'¿Seguro que quieres eliminar este candidato?\')">🗑 Borrar</a>
+                    <a href="includes/candidatos/borrar_candidato.php?id='.$c['id'].'" class="delete"
+                       onclick="return confirm(\'¿Seguro que quieres eliminar este candidato?\')">🗑 Borrar</a>
                 </td>
             </tr>';
         }
@@ -130,19 +140,28 @@ if ($activeTab === 'candidatos') {
     }
 }
 
-// ===================== Usuarios =====================
+// ===================== USUARIOS =====================
 if ($activeTab === 'usuarios') {
     echo '<h2>Usuarios</h2>';
     echo '<a href="includes/usuarios/crear_usuario.php" class="actions a create">➕ Crear Usuario</a><br><br>';
 
-    $stmt = $pdo->query("SELECT usuarios.*, empresas.nombre AS empresa_nombre FROM usuarios LEFT JOIN empresas ON usuarios.idempresa = empresas.id");
-    $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $sql = "
+        SELECT u.*, e.nombre AS empresa_nombre
+        FROM usuarios u
+        LEFT JOIN empresas e ON u.idempresa = e.id
+        WHERE u.deleted_at IS NULL
+    ";
 
-    if ($usuarios) {
-        echo '<table><tr>
-            <th>ID</th><th>Nombre</th><th>Apellidos</th><th>Email</th><th>Empresa</th><th>Admin</th><th>Acciones</th>
-        </tr>';
-        foreach ($usuarios as $u) {
+    $result = $db->query($sql);
+
+    if ($result && $result->num_rows > 0) {
+        echo '<table>
+            <tr>
+                <th>ID</th><th>Nombre</th><th>Apellidos</th><th>Email</th>
+                <th>Empresa</th><th>Admin</th><th>Acciones</th>
+            </tr>';
+
+        while ($u = $result->fetch_assoc()) {
             echo '<tr>
                 <td>'.$u['id'].'</td>
                 <td>'.$u['nombre'].'</td>
@@ -152,7 +171,8 @@ if ($activeTab === 'usuarios') {
                 <td>'.($u['is_admin'] ? 'Sí' : 'No').'</td>
                 <td class="actions">
                     <a href="includes/usuarios/editar_usuario.php?id='.$u['id'].'" class="edit">✏ Editar</a>
-                    <a href="includes/usuarios/borrar_usuario.php?id='.$u['id'].'" class="delete" onclick="return confirm(\'¿Seguro que quieres eliminar este usuario?\')">🗑 Borrar</a>
+                    <a href="includes/usuarios/borrar_usuario.php?id='.$u['id'].'" class="delete"
+                       onclick="return confirm(\'¿Seguro que quieres eliminar este usuario?\')">🗑 Borrar</a>
                 </td>
             </tr>';
         }

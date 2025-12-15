@@ -8,9 +8,9 @@ if (!isset($_SESSION['admin_login'])) {
 }
 
 // Obtener listas para select
-$empresas = $pdo->query("SELECT id, nombre FROM empresas")->fetchAll(PDO::FETCH_ASSOC);
-$sectores = $pdo->query("SELECT id, nombre FROM sectores")->fetchAll(PDO::FETCH_ASSOC);
-$modalidades = $pdo->query("SELECT id, nombre FROM modalidad")->fetchAll(PDO::FETCH_ASSOC);
+$empresas = $db->query("SELECT id, nombre FROM empresas")->fetch_all(MYSQLI_ASSOC);
+$sectores = $db->query("SELECT id, nombre FROM sectores")->fetch_all(MYSQLI_ASSOC);
+$modalidades = $db->query("SELECT id, nombre FROM modalidad")->fetch_all(MYSQLI_ASSOC);
 
 $error = '';
 
@@ -20,8 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idmodalidad = $_POST['idmodalidad'];
     $titulo = trim($_POST['titulo']);
     $descripcion = trim($_POST['descripcion']);
-    $salario_min = $_POST['salario_min'] ?: null;
-    $salario_max = $_POST['salario_max'] ?: null;
+    $salario_min = $_POST['salario_min'] !== '' ? $_POST['salario_min'] : null;
+    $salario_max = $_POST['salario_max'] !== '' ? $_POST['salario_max'] : null;
     $tipo_contrato = trim($_POST['tipo_contrato']);
     $jornada = trim($_POST['jornada']);
     $ubicacion = trim($_POST['ubicacion']);
@@ -29,10 +29,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($idempresa) || empty($idsector) || empty($idmodalidad) || empty($titulo) || empty($descripcion)) {
         $error = "Empresa, sector, modalidad, título y descripción son obligatorios.";
     } else {
-        $stmt = $pdo->prepare("INSERT INTO ofertas (idempresa, idsector, idmodalidad, titulo, descripcion, salario_min, salario_max, tipo_contrato, jornada, ubicacion) VALUES (?,?,?,?,?,?,?,?,?,?)");
-        $stmt->execute([$idempresa,$idsector,$idmodalidad,$titulo,$descripcion,$salario_min,$salario_max,$tipo_contrato,$jornada,$ubicacion]);
-        header("Location: ../../dashboard.php?tab=ofertas");
-        exit;
+        $stmt = $db->prepare("INSERT INTO ofertas (idempresa, idsector, idmodalidad, titulo, descripcion, salario_min, salario_max, tipo_contrato, jornada, ubicacion) VALUES (?,?,?,?,?,?,?,?,?,?)");
+        $stmt->bind_param(
+            "iiissdssss",
+            $idempresa,
+            $idsector,
+            $idmodalidad,
+            $titulo,
+            $descripcion,
+            $salario_min,
+            $salario_max,
+            $tipo_contrato,
+            $jornada,
+            $ubicacion
+        );
+
+        if ($stmt->execute()) {
+            header("Location: ../../dashboard.php?tab=ofertas");
+            exit;
+        } else {
+            $error = "Error al crear la oferta: " . $stmt->error;
+        }
+
+        $stmt->close();
     }
 }
 ?>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../../../conexion.php";
+require_once "../../../conexion.php"; // usa $db (mysqli)
 
 if (!isset($_SESSION['admin_login'])) {
     header('Location: ../../index.php');
@@ -10,6 +10,7 @@ if (!isset($_SESSION['admin_login'])) {
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     $dni = trim($_POST['dni']);
     $nombre = trim($_POST['nombre']);
     $apellidos = trim($_POST['apellidos']);
@@ -24,18 +25,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $provincia = trim($_POST['provincia']);
     $fecha_nacimiento = $_POST['fecha_nacimiento'];
 
+    // Validación básica
     if (empty($nombre) || empty($apellidos) || empty($email) || empty($password)) {
         $error = "Nombre, apellidos, email y contraseña son obligatorios.";
     } else {
+
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-        $stmt = $pdo->prepare("INSERT INTO candidatos (dni, nombre, apellidos, telefono, email, password_hash, linkedin, web, direccion, cp, ciudad, provincia, fecha_nacimiento) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
-        $stmt->execute([$dni, $nombre, $apellidos, $telefono, $email, $password_hash, $linkedin, $web, $direccion, $cp, $ciudad, $provincia, $fecha_nacimiento]);
-        header("Location: ../../dashboard.php?tab=candidatos");
-        exit;
+        $sql = "INSERT INTO candidatos 
+            (dni, nombre, apellidos, telefono, email, password_hash, linkedin, web, direccion, cp, ciudad, provincia, fecha_nacimiento)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param(
+            "sssssssssssss",
+            $dni,
+            $nombre,
+            $apellidos,
+            $telefono,
+            $email,
+            $password_hash,
+            $linkedin,
+            $web,
+            $direccion,
+            $cp,
+            $ciudad,
+            $provincia,
+            $fecha_nacimiento
+        );
+
+        if ($stmt->execute()) {
+            $stmt->close();
+            header("Location: ../../dashboard.php?tab=candidatos");
+            exit;
+        } else {
+            $error = "Error al crear el candidato.";
+        }
+
+        $stmt->close();
     }
 }
 ?>
+
 <link rel="stylesheet" href="../styles.css">
 <form method="POST">
     <h2>Crear Candidato</h2>

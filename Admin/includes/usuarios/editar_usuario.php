@@ -1,18 +1,38 @@
 <?php
 session_start();
-require_once "../../../conexion.php";
+require_once "../../../conexion.php"; // Conexión mysqli
 
-if (!isset($_SESSION['admin_login'])) { header('Location: ../../index.php'); exit; }
+if (!isset($_SESSION['admin_login'])) {
+    header('Location: ../../index.php');
+    exit;
+}
 
-if (!isset($_GET['id'])) { header('Location: ../../dashboard.php?tab=usuarios'); exit; }
+if (!isset($_GET['id'])) {
+    header('Location: ../../dashboard.php?tab=usuarios');
+    exit;
+}
 $id = (int)$_GET['id'];
 
-$stmt = $pdo->prepare("SELECT * FROM usuarios WHERE id=?");
-$stmt->execute([$id]);
-$usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-if (!$usuario) { header('Location: ../../dashboard.php?tab=usuarios'); exit; }
+// Obtener usuario
+$stmt = $db->prepare("SELECT * FROM usuarios WHERE id=?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$usuario = $result->fetch_assoc();
+$stmt->close();
 
-$empresas = $pdo->query("SELECT id, nombre FROM empresas")->fetchAll(PDO::FETCH_ASSOC);
+if (!$usuario) {
+    header('Location: ../../dashboard.php?tab=usuarios');
+    exit;
+}
+
+// Obtener empresas
+$empresas_result = $db->query("SELECT id, nombre FROM empresas");
+$empresas = [];
+while ($row = $empresas_result->fetch_assoc()) {
+    $empresas[] = $row;
+}
+
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -29,11 +49,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         if (!empty($password)) {
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("UPDATE usuarios SET nombre=?, apellidos=?, telefono=?, email=?, password_hash=?, idempresa=?, is_admin=? WHERE id=?");
-            $stmt->execute([$nombre,$apellidos,$telefono,$email,$password_hash,$idempresa,$is_admin,$id]);
+            $stmt = $db->prepare("UPDATE usuarios SET nombre=?, apellidos=?, telefono=?, email=?, password_hash=?, idempresa=?, is_admin=? WHERE id=?");
+            $stmt->bind_param("sssssiii", $nombre, $apellidos, $telefono, $email, $password_hash, $idempresa, $is_admin, $id);
+            $stmt->execute();
+            $stmt->close();
         } else {
-            $stmt = $pdo->prepare("UPDATE usuarios SET nombre=?, apellidos=?, telefono=?, email=?, idempresa=?, is_admin=? WHERE id=?");
-            $stmt->execute([$nombre,$apellidos,$telefono,$email,$idempresa,$is_admin,$id]);
+            $stmt = $db->prepare("UPDATE usuarios SET nombre=?, apellidos=?, telefono=?, email=?, idempresa=?, is_admin=? WHERE id=?");
+            $stmt->bind_param("ssssiii", $nombre, $apellidos, $telefono, $email, $idempresa, $is_admin, $id);
+            $stmt->execute();
+            $stmt->close();
         }
         header("Location: ../../dashboard.php?tab=usuarios");
         exit;
@@ -60,4 +84,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <button type="submit">Actualizar</button>
     <a href="../../dashboard.php?tab=usuarios">Cancelar</a>
 </form>
-   
