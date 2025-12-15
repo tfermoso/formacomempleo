@@ -14,7 +14,6 @@ body {
 }
 
 /* Header */
-
 .site-header {
   position: fixed;
   top: 0;
@@ -24,7 +23,7 @@ body {
   color: rgb(43, 75, 123);
   padding: 1rem 0;
   border-bottom: 1px solid #ddd;
-  z-index: 1000; /* asegura que quede por encima del contenido */
+  z-index: 1000;
 }
 
 .site-header .container {
@@ -59,7 +58,7 @@ body {
   color: rgb(43, 75, 123);
   text-decoration: none;
   text-transform: capitalize;
-  font-size: 0.9rem; /* más pequeño en desktop */
+  font-size: 0.9rem;
   font-weight: 500;
 }
 
@@ -74,15 +73,15 @@ body {
   font-size: 2rem;
   color: rgb(43, 75, 123);
   cursor: pointer;
-  display: none; /* oculto en desktop */
-  margin-left: auto; /* empuja el botón a la derecha */
+  display: none;
+  margin-left: auto;
   z-index: 1001;
 }
 
 /* Hero principal */
 .hero {
   background: url("../img/cropped-background.jpg") center/cover no-repeat;
-  background-attachment: fixed; /* clave para el efecto parallax */
+  background-attachment: fixed;
   height: 60vh;
   position: relative;
   display: flex;
@@ -166,11 +165,11 @@ body {
 
 /* Variantes de azul corporativo */
 .option-block.empresas {
-  background-color: #1A2E4F; /* azul corporativo principal */
+  background-color: #1A2E4F;
 }
 
 .option-block.candidatos {
-  background-color: rgb(43, 75, 123); /* variante más oscura */
+  background-color: rgb(43, 75, 123);
 }
 
 /* Cursos */
@@ -222,19 +221,19 @@ body {
 }
 
 .btn-secondary-inverted {
-  background-color: #fff;        /* fondo claro */
-  color: #2b4b7b;                /* azul corporativo como texto */
+  background-color: #fff;
+  color: #2b4b7b;
   font-weight: 600;
   padding: 0.75rem 1.5rem;
   border-radius: 4px;
   text-decoration: none;
   transition: all 0.3s ease;
-  border: 1px solid #fff;        /* borde blanco para integrarse en fondos oscuros */
+  border: 1px solid #fff;
 }
 
 .btn-secondary-inverted:hover {
-  background-color: #f0f0f0;     /* gris muy claro en hover */
-  color: #1a2e4f;                /* azul más oscuro para contraste */
+  background-color: #f0f0f0;
+  color: #1a2e4f;
   border-color: #f0f0f0;
 }
 
@@ -342,19 +341,19 @@ body {
     background-color: rgb(43, 75, 123);
     color: #fff;
     padding: 4rem 2rem;
-    transform: translateX(100%); /* oculto fuera de pantalla */
-    transition: transform 0.4s ease-in-out; /* animación fluida */
+    transform: translateX(100%);
+    transition: transform 0.4s ease-in-out;
     z-index: 1000;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
   }
 
   .main-nav ul.show {
-    transform: translateX(0); /* entra suavemente */
+    transform: translateX(0);
   }
 
   .main-nav a {
     color: #fff;
-    font-size: 1rem; /* más pequeño en mobile */
+    font-size: 1rem;
     font-weight: 500;
     padding: 1rem 0;
     text-align: left;
@@ -380,7 +379,7 @@ body {
   }
 
   .main-nav a:hover {
-    color: #fff; /* o azul corporativo si fondo blanco */
+    color: #fff;
   }
 
   .main-nav a:hover::after {
