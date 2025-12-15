@@ -16,11 +16,11 @@ $candidato = getCandidatoCompleto($conn, $id);
 
 // Foto del candidato
 $foto = (!empty($candidato['foto']))
-    ? "uploads/fotos/" . $candidato['foto']
-    : "uploads/fotos/default.png";
+    ? "../uploads/fotos/" . $candidato['foto']
+    : "../uploads/fotos/default.png";
 
 // Logo de la empresa
-$logo = "media/img/logo.png";
+$logo = "../media/img/logo.png";
 ?>
 <!DOCTYPE html>
 <html lang="es">

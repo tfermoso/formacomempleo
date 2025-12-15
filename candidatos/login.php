@@ -57,6 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <button type="submit">Entrar</button>
 </form>
 
+<p>¿No tienes cuenta? <a href="registro.php">Regístrate</a></p>
+
+
 </body>
 </html>
 <?php include 'includes/footer.php'; ?>

@@ -3,12 +3,12 @@ session_start();
 
 require_once 'includes/header.php';
 
-require_once __DIR__ . '.../includes/config.php';
-require_once __DIR__ . '../includes/functions.php';
+require_once  'includes/config.php';
+require_once  'includes/functions.php';
 
 if (!isset($_SESSION['idcandidato'])) {
     echo "Acceso denegado. Inicia sesión.";
-    exit;
+    ;
 }
 
 $idcandidato = (int)$_SESSION['idcandidato'];
@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Eliminar inscripción
     if (isset($_POST['accion']) && $_POST['accion'] === 'eliminar_inscripcion') {
         $idoferta = (int)$_POST['idoferta'];
+        $conn = conectarDB;
         if (eliminarInscripcion($conn, $idoferta, $idcandidato)) {
             $mensaje = "Inscripción eliminada correctamente.";
         } else {

@@ -11,6 +11,17 @@ function getCandidato(mysqli $conn, int $id) {
     return $stmt->get_result()->fetch_assoc();
 }
 
+function conectarBD() {
+    $conexion = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+    if ($conexion->connect_error) {
+        die("Error de conexión: " . $conexion->connect_error);
+    }
+
+    $conexion->set_charset("utf8mb4");
+    return $conexion;
+}
+
 function getOfertasInscritas(mysqli $conn, int $idcandidato) {
     $sql = "
         SELECT 
