@@ -161,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mysqli->commit();
 
         setFlash('success', 'Empresa registrada correctamente.');
-        header("Location: ../index.php");
+        header("Location: ../login.php");
         exit;
     } catch (Exception $e) {
         $mysqli->rollback();

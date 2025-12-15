@@ -30,12 +30,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bind_param("iiissss", $_SESSION["idempresa"], $idsector, $idmodalidad, $titulo, $descripcion, $publicar_hasta, $estado);
 
         if ($stmt->execute()) {
-            $mensaje = "Oferta creada correctamente.";
-            $tipoMensaje = "success";
+            setFlash("success", "Oferta creada correctamente.");
+            header("Location: dashboard.php");
+            exit;
         } else {
             $mensaje = "Error al crear la oferta: " . $conn->error;
             $tipoMensaje = "error";
         }
+
         $stmt->close();
     }
 }
@@ -45,57 +47,52 @@ $sectores = obtenerSectores($conn);
 $modalidades = obtenerModalidades($conn);
 
 $conn->close();
+
+
+include './includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Nueva Oferta</title>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
 
-<body>
-    <h1>Crear nueva oferta</h1>
+<h1>Crear nueva oferta</h1>
 
-    <?php mostrarMensaje($mensaje, $tipoMensaje); ?>
+<?php mostrarMensaje($mensaje, $tipoMensaje); ?>
 
-    <form method="post">
-        <label for="titulo">Título*</label>
-        <input type="text" id="titulo" name="titulo" required>
+<form method="post">
+    <label for="titulo">Título*</label>
+    <input type="text" id="titulo" name="titulo" required>
 
-        <label for="descripcion">Descripción*</label>
-        <textarea id="descripcion" name="descripcion" required></textarea>
+    <label for="descripcion">Descripción*</label>
+    <textarea id="descripcion" name="descripcion" required></textarea>
 
-        <label for="idsector">Sector*</label>
-        <select id="idsector" name="idsector" required>
-            <?php while ($s = $sectores->fetch_assoc()): ?>
-                <option value="<?php echo $s["id"]; ?>"><?php echo htmlspecialchars($s["nombre"]); ?></option>
-            <?php endwhile; ?>
-        </select>
+    <label for="idsector">Sector*</label>
+    <select id="idsector" name="idsector" required>
+        <?php while ($s = $sectores->fetch_assoc()): ?>
+            <option value="<?php echo $s["id"]; ?>"><?php echo htmlspecialchars($s["nombre"]); ?></option>
+        <?php endwhile; ?>
+    </select>
 
-        <label for="idmodalidad">Modalidad*</label>
-        <select id="idmodalidad" name="idmodalidad" required>
-            <?php while ($m = $modalidades->fetch_assoc()): ?>
-                <option value="<?php echo $m["id"]; ?>"><?php echo htmlspecialchars($m["nombre"]); ?></option>
-            <?php endwhile; ?>
-        </select>
+    <label for="idmodalidad">Modalidad*</label>
+    <select id="idmodalidad" name="idmodalidad" required>
+        <?php while ($m = $modalidades->fetch_assoc()): ?>
+            <option value="<?php echo $m["id"]; ?>"><?php echo htmlspecialchars($m["nombre"]); ?></option>
+        <?php endwhile; ?>
+    </select>
 
-        <label for="estado">Estado*</label>
-        <select id="estado" name="estado" required>
-            <?php
-            $estados = ["borrador", "publicada", "pausada", "cerrada", "vencida"];
-            foreach ($estados as $e): ?>
-                <option value="<?php echo $e; ?>"><?php echo ucfirst($e); ?></option>
-            <?php endforeach; ?>
-        </select>
+    <label for="estado">Estado*</label>
+    <select id="estado" name="estado" required>
+        <?php
+        $estados = ["borrador", "publicada", "pausada", "cerrada", "vencida"];
+        foreach ($estados as $e): ?>
+            <option value="<?php echo $e; ?>"><?php echo ucfirst($e); ?></option>
+        <?php endforeach; ?>
+    </select>
 
-        <label for="publicar_hasta">Publicar hasta*</label>
-        <input type="date" id="publicar_hasta" name="publicar_hasta" min="<?php echo date('Y-m-d'); ?>" required>
+    <label for="publicar_hasta">Publicar hasta*</label>
+    <input type="date" id="publicar_hasta" name="publicar_hasta" min="<?php echo date('Y-m-d'); ?>" required>
 
-        <button type="submit" class="boton nuevo">Crear oferta</button>
-        <a href="dashboard.php" class="boton volver">Volver</a>
-    </form>
+    <button type="submit" class="boton nuevo">Crear oferta</button>
+    <a href="dashboard.php" class="boton volver">Volver</a>
+</form>
 </body>
 
 </html>

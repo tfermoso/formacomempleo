@@ -2,6 +2,19 @@
 
 require_once __DIR__ . "/../includes/funciones.php";
 
+$mensajes = getFlash();
+
+if (!empty($mensajes)) {
+    foreach ($mensajes as $tipo => $lista) {
+        foreach ($lista as $msg) {
+            echo "<p class='mensaje-$tipo'>$msg</p>";
+        }
+    }
+}
+
+
+
+
 redirectIfNotLoggedIn();
 $conn = conectarBD();
 
@@ -35,7 +48,6 @@ include './includes/header.php';
 
 <p class="acciones-centradas">
     <a href="nueva_oferta.php" class="boton nuevo">Crear nueva oferta</a>
-    <a href="logout.php" class="boton volver">Cerrar sesión</a>
 </p>
 
 <div class="table-container">

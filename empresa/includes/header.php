@@ -32,8 +32,8 @@ $usuarioNombre = $_SESSION["usuario_nombre"] ?? null;
                 <?php if ($usuarioLogueado): ?>
 
                     <li><a href="../empresa/dashboard.php">Dashboard</a></li>
-                    <li><a href="../empresa/crear_oferta.php">Ofertas</a></li>
-                    <li><a href="../empresa/perfil.php">Mi Empresa</a></li>
+
+
 
                     <li class="menu-usuario">
                         <span class="usuario-nombre">

@@ -50,16 +50,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                 WHERE id = ? AND idempresa = ?");
         $stmt->bind_param("ssiissii", $titulo, $descripcion, $idsector, $idmodalidad, $estado, $publicar_hasta, $idoferta, $_SESSION["idempresa"]);
 
+
         if ($stmt->execute()) {
-            $mensaje = "Oferta actualizada correctamente.";
-            $tipoMensaje = "success";
-            // Refrescar datos en memoria
-            $oferta["titulo"] = $titulo;
-            $oferta["descripcion"] = $descripcion;
-            $oferta["idsector"] = $idsector;
-            $oferta["idmodalidad"] = $idmodalidad;
-            $oferta["estado"] = $estado;
-            $oferta["publicar_hasta"] = $publicar_hasta;
+            setFlash("success", "Oferta actualizada correctamente.");
+            header("Location: dashboard.php");
+            exit;
         } else {
             $mensaje = "Error al actualizar la oferta: " . $conn->error;
             $tipoMensaje = "error";
@@ -82,64 +77,58 @@ $valorFecha = isset($oferta["publicar_hasta"]) && $oferta["publicar_hasta"] !== 
     ? htmlspecialchars($oferta["publicar_hasta"])
     : "";
 $minFecha = date('Y-m-d');
+
+
+
+include './includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Editar Oferta</title>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
 
-<body>
-    <h1>Editar oferta</h1>
+<h1>Editar oferta</h1>
 
-    <?php mostrarMensaje($mensaje, $tipoMensaje); ?>
+<?php mostrarMensaje($mensaje, $tipoMensaje); ?>
 
-    <form method="post">
-        <label for="titulo">Título*</label>
-        <input type="text" id="titulo" name="titulo" value="<?php echo htmlspecialchars($oferta["titulo"]); ?>"
-            required>
+<form method="post">
+    <label for="titulo">Título*</label>
+    <input type="text" id="titulo" name="titulo" value="<?php echo htmlspecialchars($oferta["titulo"]); ?>"
+        required>
 
-        <label for="descripcion">Descripción*</label>
-        <textarea id="descripcion" name="descripcion"
-            required><?php echo htmlspecialchars($oferta["descripcion"]); ?></textarea>
+    <label for="descripcion">Descripción*</label>
+    <textarea id="descripcion" name="descripcion"
+        required><?php echo htmlspecialchars($oferta["descripcion"]); ?></textarea>
 
-        <label for="idsector">Sector*</label>
-        <select id="idsector" name="idsector" required>
-            <?php while ($s = $sectores->fetch_assoc()): ?>
-                <option value="<?php echo $s["id"]; ?>" <?php echo ($s["id"] == $oferta["idsector"]) ? "selected" : ""; ?>>
-                    <?php echo htmlspecialchars($s["nombre"]); ?>
-                </option>
-            <?php endwhile; ?>
-        </select>
+    <label for="idsector">Sector*</label>
+    <select id="idsector" name="idsector" required>
+        <?php while ($s = $sectores->fetch_assoc()): ?>
+            <option value="<?php echo $s["id"]; ?>" <?php echo ($s["id"] == $oferta["idsector"]) ? "selected" : ""; ?>>
+                <?php echo htmlspecialchars($s["nombre"]); ?>
+            </option>
+        <?php endwhile; ?>
+    </select>
 
-        <label for="idmodalidad">Modalidad*</label>
-        <select id="idmodalidad" name="idmodalidad" required>
-            <?php while ($m = $modalidades->fetch_assoc()): ?>
-                <option value="<?php echo $m["id"]; ?>" <?php echo ($m["id"] == $oferta["idmodalidad"]) ? "selected" : ""; ?>>
-                    <?php echo htmlspecialchars($m["nombre"]); ?>
-                </option>
-            <?php endwhile; ?>
-        </select>
+    <label for="idmodalidad">Modalidad*</label>
+    <select id="idmodalidad" name="idmodalidad" required>
+        <?php while ($m = $modalidades->fetch_assoc()): ?>
+            <option value="<?php echo $m["id"]; ?>" <?php echo ($m["id"] == $oferta["idmodalidad"]) ? "selected" : ""; ?>>
+                <?php echo htmlspecialchars($m["nombre"]); ?>
+            </option>
+        <?php endwhile; ?>
+    </select>
 
-        <label for="estado">Estado*</label>
-        <select id="estado" name="estado" required>
-            <?php foreach ($estados as $e): ?>
-                <option value="<?php echo $e; ?>" <?php echo ($e == $oferta["estado"]) ? "selected" : ""; ?>>
-                    <?php echo ucfirst($e); ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
+    <label for="estado">Estado*</label>
+    <select id="estado" name="estado" required>
+        <?php foreach ($estados as $e): ?>
+            <option value="<?php echo $e; ?>" <?php echo ($e == $oferta["estado"]) ? "selected" : ""; ?>>
+                <?php echo ucfirst($e); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
 
-        <label for="publicar_hasta">Publicar hasta*</label>
-        <input type="date" id="publicar_hasta" name="publicar_hasta" value="<?php echo $valorFecha; ?>"
-            min="<?php echo $minFecha; ?>" required>
+    <label for="publicar_hasta">Publicar hasta*</label>
+    <input type="date" id="publicar_hasta" name="publicar_hasta" value="<?php echo $valorFecha; ?>"
+        min="<?php echo $minFecha; ?>" required>
 
-        <button type="submit" class="boton editar">Guardar cambios</button>
-        <a href="dashboard.php" class="boton volver">Volver</a>
-    </form>
-</body>
-
-</html>
+    <button type="submit" class="boton editar">Guardar cambios</button>
+    <a href="dashboard.php" class="boton volver">Volver</a>
+</form>
+<?php include __DIR__ . '/includes/footer.php'; ?>

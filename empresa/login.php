@@ -35,34 +35,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $mensaje = "Credenciales incorrectas.";
     }
 }
+include './includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Login Empresa</title>
-    <link rel="stylesheet" href="../css/style.css">
-</head>
+<h1>Login Empresa</h1>
 
-<body>
-    <h1>Login Empresa</h1>
+<?php if ($mensaje): ?>
+    <div class="alert alert-error"><?php echo htmlspecialchars($mensaje); ?></div>
+<?php endif; ?>
 
-    <?php if ($mensaje): ?>
-        <div class="alert alert-error"><?php echo htmlspecialchars($mensaje); ?></div>
-    <?php endif; ?>
+<?php if (isset($_GET["msg"])): ?>
+    <div class="alert alert-success">
+        <?php echo htmlspecialchars($_GET["msg"]); ?>
+    </div>
+<?php endif; ?>
 
-    <?php if (isset($_GET["msg"])): ?>
-        <div class="alert alert-success">
-            <?php echo htmlspecialchars($_GET["msg"]); ?>
-        </div>
-    <?php endif; ?>
-
-    <form method="post">
-        <label>Email: <input type="email" name="email" required></label><br><br>
-        <label>Password: <input type="password" name="password" required></label><br><br>
-        <button type="submit" class="boton nuevo">Entrar</button>
-    </form>
+<form method="post">
+    <label>Email: <input type="email" name="email" required></label><br><br>
+    <label>Password: <input type="password" name="password" required></label><br><br>
+    <button type="submit" class="boton nuevo">Entrar</button>
+</form>
 </body>
 
 </html>
