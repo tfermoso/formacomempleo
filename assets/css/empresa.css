@@ -138,6 +138,41 @@ form button:hover {
   background-color: #0288d1;
 }
 
+.login-form form{
+  display: block;
+  max-width: 400px;
+  margin: 2rem auto;
+}
+
+.login-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.login-form button {
+  width: 100%;
+}
+
+.login-links {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.login-links a {
+  display: inline-block;
+  margin: 0.25rem 0;
+  font-size: 0.85rem;
+  color: #2b4b7b;
+  text-decoration: none;
+}
+
+.login-links a strong {
+  font-weight: 600;
+}
+
+.login-links a:hover {
+  text-decoration: underline;
+}
+
 .mensaje-success {
   background-color: #d4edda;
   color: #155724;
