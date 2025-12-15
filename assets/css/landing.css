@@ -1,0 +1,444 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+  padding-top: 70px;
+}
+
+/* Header */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  color: rgb(43, 75, 123);
+  padding: 1rem 0;
+  border-bottom: 1px solid #ddd;
+  z-index: 1000;
+}
+
+.site-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.logo-img {
+  height: 48px;
+  width: auto;
+  vertical-align: middle;
+}
+
+/* Navegación */
+.main-nav {
+  margin-left: auto;
+}
+
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.2rem;
+  position: relative;
+  z-index: 1002;
+}
+
+.main-nav a {
+  color: rgb(43, 75, 123);
+  text-decoration: none;
+  text-transform: capitalize;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.main-nav a:hover {
+  text-decoration: underline;
+}
+
+/* Botón hamburguesa */
+.nav-toggle {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: rgb(43, 75, 123);
+  cursor: pointer;
+  display: none;
+  margin-left: auto;
+  z-index: 1001;
+}
+
+/* Hero principal */
+.hero {
+  background: url("../img/cropped-background.jpg") center/cover no-repeat;
+  background-attachment: fixed;
+  height: 60vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-overlay {
+  background-color: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(5px);
+  color: #fff;
+  padding: 2rem;
+}
+
+.hero-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.hero-subtitle {
+  font-size: 1.4rem;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.hero-text {
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  font-weight: 400;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.option-block {
+  flex: 1 1 50%;
+  min-height: 300px;
+  padding: 3rem 2rem;
+  text-align: center;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.option-block img {
+  width: 128px;
+  height: 128px;
+  margin-bottom: 1rem;
+}
+
+.option-block h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.option-block p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.option-block .btn-light {
+  background-color: #03A9F4;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.option-block .btn-light:hover {
+  background-color: #0288d1;
+}
+
+/* Variantes de azul corporativo */
+.option-block.empresas {
+  background-color: #1A2E4F;
+}
+
+.option-block.candidatos {
+  background-color: rgb(43, 75, 123);
+}
+
+/* Cursos */
+.courses {
+  background-color: #f0f0f0;
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.courses h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: rgb(43, 75, 123);
+  font-weight: 700;
+}
+
+.courses p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+/* Botones */
+.btn {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #03A9F4;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #2b4b7b;
+}
+
+.btn-secondary {
+  background-color: #2b4b7b;
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: #222;
+}
+
+.btn-secondary-inverted {
+  background-color: #fff;
+  color: #2b4b7b;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid #fff;
+}
+
+.btn-secondary-inverted:hover {
+  background-color: #f0f0f0;
+  color: #1a2e4f;
+  border-color: #f0f0f0;
+}
+
+/* Footer */
+.site-footer {
+  background-color: #222;
+  color: #ccc;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+.latest-offers {
+  position: relative;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #fff;
+  background: url("../img/cropped-background.jpg") center/cover no-repeat;
+  background-attachment: fixed;
+}
+
+.latest-offers::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(43, 75, 123, 0.75);
+  z-index: 0;
+}
+
+.latest-offers h2 {
+  position: relative;
+  z-index: 1;
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.latest-offers .btn-secondary-inverted {
+  position: relative;
+  z-index: 1;
+  margin-top: 2rem;
+}
+
+.offers-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.offers-grid,
+.latest-offers h2,
+.latest-offers .btn {
+  position: relative;
+  z-index: 1; 
+}
+
+.offer-card {
+  background: rgba(255, 255, 255, 0.80); 
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.offer-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: rgb(43, 75, 123);
+  font-weight: 600;
+}
+
+.offer-card p {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.offer-card .btn {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  z-index: 1;
+}
+
+.form-input {
+  font-size: 1.1rem;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 1rem auto;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+  
+
+/* Responsive slide-in menu */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+    position: relative;
+    margin-left: auto;
+    z-index: 1001;
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: rgb(43, 75, 123);
+    color: #fff;
+    padding: 4rem 2rem;
+    transform: translateX(100%);
+    transition: transform 0.4s ease-in-out;
+    z-index: 1000;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .main-nav ul.show {
+    transform: translateX(0);
+  }
+
+  .main-nav a {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 1rem 0;
+    text-align: left;
+    width: 100%;
+    text-decoration: none;
+    text-transform: capitalize;
+  }
+
+  .main-nav a {
+    position: relative;
+    transition: color 0.3s ease-in-out;
+  }
+
+  .main-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0%;
+    height: 2px;
+    background-color: currentColor;
+    transition: width 0.3s ease-in-out;
+  }
+
+  .main-nav a:hover {
+    color: #fff;
+  }
+
+  .main-nav a:hover::after {
+    width: 100%;
+  }
+
+  .nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+    z-index: 999;
+  }
+
+  .nav-overlay.show {
+    display: block;
+  }
+
+  .option-block {
+    flex: 1 1 100%;
+  }
+
+  .hero {
+    height: 40vh;
+  }
+
+  .hero-title {
+    font-size: 1.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .offers-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .offer-card {
+    max-width: 90%;
+  }
+
+  .courses {
+    padding: 2rem 1rem;
+  }
+}

@@ -68,65 +68,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Registro</title>
+    <title>Registro | Formacom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Enlaza tu CSS -->
+    <link rel="stylesheet" href="../assets/css/registro.css">
 </head>
+
 <body>
 
-<h2>Registro</h2>
+    <?php include 'includes/header.php'; ?>
 
-<?php if ($mensaje): ?>
-    <p><?php echo $mensaje; ?></p>
-<?php endif; ?>
+    <main>
+        <h2 class="hero-title">Registro</h2>
 
-<form method="POST">
+        <?php if ($mensaje): ?>
+            <div class="alert"><?php echo $mensaje; ?></div>
+        <?php endif; ?>
 
-    DNI:<br>
-    <input type="text" name="dni"><br><br>
+        <form method="POST" class="form-card">
+            <label for="dni">DNI</label>
+            <input type="text" name="dni" id="dni" class="form-input">
 
-    Nombre:*<br>
-    <input type="text" name="nombre" required><br><br>
+            <label for="nombre">Nombre*</label>
+            <input type="text" name="nombre" id="nombre" required class="form-input">
 
-    Apellidos:*<br>
-    <input type="text" name="apellidos" required><br><br>
+            <label for="apellidos">Apellidos*</label>
+            <input type="text" name="apellidos" id="apellidos" required class="form-input">
 
-    Teléfono:<br>
-    <input type="text" name="telefono"><br><br>
+            <label for="telefono">Teléfono</label>
+            <input type="text" name="telefono" id="telefono" class="form-input">
 
-    Email:*<br>
-    <input type="email" name="email" required><br><br>
+            <label for="email">Email*</label>
+            <input type="email" name="email" id="email" required class="form-input">
 
-    Contraseña:*<br>
-    <input type="password" name="password" required><br><br>
+            <label for="password">Contraseña*</label>
+            <input type="password" name="password" id="password" required class="form-input">
 
-    LinkedIn:<br>
-    <input type="text" name="linkedin"><br><br>
+            <label for="linkedin">LinkedIn</label>
+            <input type="text" name="linkedin" id="linkedin" class="form-input">
 
-    Web personal:<br>
-    <input type="text" name="web"><br><br>
+            <label for="web">Web personal</label>
+            <input type="text" name="web" id="web" class="form-input">
 
-    Dirección:<br>
-    <input type="text" name="direccion"><br><br>
+            <label for="direccion">Dirección</label>
+            <input type="text" name="direccion" id="direccion" class="form-input">
 
-    Código postal:<br>
-    <input type="text" name="cp"><br><br>
+            <label for="cp">Código postal</label>
+            <input type="text" name="cp" id="cp" class="form-input">
 
-    Ciudad:<br>
-    <input type="text" name="ciudad"><br><br>
+            <label for="ciudad">Ciudad</label>
+            <input type="text" name="ciudad" id="ciudad" class="form-input">
 
-    Provincia:<br>
-    <input type="text" name="provincia"><br><br>
+            <label for="provincia">Provincia</label>
+            <input type="text" name="provincia" id="provincia" class="form-input">
 
-    Fecha de nacimiento:<br>
-    <input type="date" name="fecha_nacimiento"><br><br>
+            <label for="fecha_nacimiento">Fecha de nacimiento</label>
+            <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="form-input">
 
-    <button type="submit">Registrarse</button>
-</form>
+            <button type="submit" class="btn btn-primary">Registrarse</button>
+        </form>
 
-<br>
-<a href="login.php">Volver al login</a>
+        <p style="text-align:center; margin-top:1rem;">
+            <a href="login.php" class="btn">Volver al login</a>
+        </p>
+    </main>
+
+    <?php include 'includes/footer.php'; ?>
 
 </body>
+
 </html>
-<?php include 'includes/footer.php'; ?>

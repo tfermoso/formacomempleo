@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'includes/config.php';
+require_once '../includes/config.php';
 
 $mensaje = "";
 
@@ -33,30 +33,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+<?php
+
+?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Iniciar sesión</title>
+    <title>Iniciar sesión | Formacom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/login.css">
 </head>
+
 <body>
 
-<h2>Iniciar sesión</h2>
+    <?php include '../includes/header.php'; ?>
 
-<?php if ($mensaje): ?>
-    <p><?php echo $mensaje; ?></p>
-<?php endif; ?>
+    <main class="container">
+        <h2 class="hero-title">Iniciar sesión</h2>
 
-<form method="POST">
-    Email:<br>
-    <input type="email" name="email" required><br><br>
+        <?php if ($mensaje): ?>
+            <div class="alert"><?php echo $mensaje; ?></div>
+        <?php endif; ?>
 
-    Contraseña:<br>
-    <input type="password" name="password" required><br><br>
+        <form method="POST" class="form-card">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required class="form-input">
 
-    <button type="submit">Entrar</button>
-</form>
+            <label for="password">Contraseña</label>
+            <input type="password" name="password" id="password" required class="form-input">
+
+            <button type="submit" class="btn btn-primary">Entrar</button>
+        </form>
+    </main>
+
+    <?php include '../includes/footer.php'; ?>
 
 </body>
+
 </html>
-<?php include 'includes/footer.php'; ?>

@@ -6,6 +6,7 @@ require_once 'includes/header.php';
 require_once __DIR__ . '.../includes/config.php';
 require_once __DIR__ . '../includes/functions.php';
 
+
 if (!isset($_SESSION['idcandidato'])) {
     echo "Acceso denegado. Inicia sesión.";
     exit;
