@@ -41,6 +41,34 @@ a:hover {
   padding: 2rem 1rem;
 }
 
+/* Header */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  color: rgb(43, 75, 123);
+  padding: 1rem 0;
+  border-bottom: 1px solid #ddd;
+  z-index: 1000;
+}
+
+.site-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.logo-img {
+  height: 48px;
+  width: auto;
+  vertical-align: middle;
+}
+
 /* =========================
    Tabs de navegación
    ========================= */
@@ -241,6 +269,91 @@ form a {
   font-size: 1rem;
   color: #555;
 }
+/* Footer */
+.site-footer {
+  background-color: #222;
+  color: #ccc;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+.latest-offers {
+  position: relative;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #fff;
+  background: url("../img/cropped-background.jpg") center/cover no-repeat;
+  background-attachment: fixed;
+}
+
+.latest-offers::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(43, 75, 123, 0.75);
+  z-index: 0;
+}
+
+.latest-offers h2 {
+  position: relative;
+  z-index: 1;
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+.latest-offers .btn-secondary-inverted {
+  position: relative;
+  z-index: 1;
+  margin-top: 2rem;
+}
+
+.offers-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.offers-grid,
+.latest-offers h2,
+.latest-offers .btn {
+  position: relative;
+  z-index: 1; 
+}
+
+.offer-card {
+  background: rgba(255, 255, 255, 0.80); 
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.offer-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: rgb(43, 75, 123);
+  font-weight: 600;
+}
+
+.offer-card p {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+.offer-card .btn {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  z-index: 1;
+}
+
 
 /* =========================
    Responsive
