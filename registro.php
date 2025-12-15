@@ -222,7 +222,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <label>Provincia: </label><input type="text" name="provincia"><br><br>
 
-    <label>Fecha de nacimiento: </label><input type="date" name="fecha_nacimiento"><br><br>
+    <label>Fecha de nacimiento<span class="obligatorio">*</span>: </label><input type="date" name="fecha_nacimiento"><br><br>
 
    
 </label>
@@ -259,3 +259,4 @@ inputFoto.addEventListener('change', function(){
 
 </body>
 </html>
+
