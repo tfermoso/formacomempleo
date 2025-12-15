@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // 2. Subir foto
     if (!empty($_FILES['foto']['name'])) {
-        $foto = subirArchivo($_FILES['foto'], "uploads/fotos/", ['jpg','jpeg','png']);
+        $foto = subirArchivo($_FILES['foto'], "../uploads/fotos/", ['jpg','jpeg','png']);
         if ($foto) {
             $conn->query("UPDATE candidatos SET foto = '$foto' WHERE id = $id");
         }
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // 3. Subir CV
     if (!empty($_FILES['cv']['name'])) {
-        $cv = subirArchivo($_FILES['cv'], "uploads/cv/", ['pdf','txt']);
+        $cv = subirArchivo($_FILES['cv'], "../uploads/cv/", ['pdf','txt']);
         if ($cv) {
             $conn->query("UPDATE candidatos SET cv = '$cv' WHERE id = $id");
         }
