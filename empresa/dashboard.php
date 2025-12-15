@@ -1,19 +1,5 @@
 <?php
-
 require_once __DIR__ . "/../includes/funciones.php";
-
-$mensajes = getFlash();
-
-if (!empty($mensajes)) {
-    foreach ($mensajes as $tipo => $lista) {
-        foreach ($lista as $msg) {
-            echo "<p class='mensaje-$tipo'>$msg</p>";
-        }
-    }
-}
-
-
-
 
 redirectIfNotLoggedIn();
 $conn = conectarBD();
@@ -25,68 +11,82 @@ $idempresa = intval($_SESSION["idempresa"]);
 // Cargar ofertas de la empresa
 $stmt = $conn->prepare("SELECT id, titulo, estado, fecha_publicacion, publicar_hasta 
                         FROM ofertas 
-                        WHERE idempresa = ? AND deleted_at IS NULL");
+                        WHERE idempresa = ? AND deleted_at IS NULL
+                        ORDER BY fecha_publicacion DESC");
 $stmt->bind_param("i", $idempresa);
 $stmt->execute();
 $resultado = $stmt->get_result();
 $stmt->close();
-
 $conn->close();
+
 include './includes/header.php';
 ?>
 
-<?php if (isset($_GET["msg"])): ?>
-    <div class="alert <?php echo $_GET["type"] === 'success' ? 'alert-success' : 'alert-error'; ?>">
-        <?php echo htmlspecialchars($_GET["msg"]); ?>
+<div class="dashboard-wrapper">
+
+    <?php
+    $mensajes = getFlash();
+    if (!empty($mensajes)) {
+        foreach ($mensajes as $tipo => $lista) {
+            foreach ($lista as $msg) {
+                echo "<div class='alert alert-$tipo'>$msg</div>";
+            }
+        }
+    }
+    ?>
+
+    <h1 class="titulo-dashboard">Mis Ofertas</h1>
+
+    <p class="bienvenida">
+        Bienvenido, <strong><?php echo htmlspecialchars($usuario["nombre"] . " " . $usuario["apellidos"]); ?></strong>
+    </p>
+
+    <div class="acciones-centradas">
+        <a href="nueva_oferta.php" class="boton nuevo">+ Crear nueva oferta</a>
     </div>
-<?php endif; ?>
 
-<h1>Mis Ofertas</h1>
-<p class="bienvenida">
-    Bienvenido, <?php echo htmlspecialchars($usuario["nombre"] . " " . $usuario["apellidos"]); ?>
-</p>
-
-<p class="acciones-centradas">
-    <a href="nueva_oferta.php" class="boton nuevo">Crear nueva oferta</a>
-</p>
-
-<div class="table-container">
-    <table>
-        <thead>
-            <tr>
-
-                <th>Título</th>
-                <th>Estado</th>
-                <th>Fecha publicación</th>
-                <th>Publicar hasta</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if ($resultado->num_rows > 0): ?>
-                <?php while ($row = $resultado->fetch_assoc()): ?>
-                    <tr>
-
-                        <td><?php echo htmlspecialchars($row["titulo"]); ?></td>
-                        <td><?php echo htmlspecialchars($row["estado"]); ?></td>
-                        <td><?php echo htmlspecialchars($row["fecha_publicacion"]); ?></td>
-                        <td><?php echo htmlspecialchars($row["publicar_hasta"]); ?></td>
-                        <td>
-                            <a href="editar_oferta.php?id=<?php echo $row["id"]; ?>" class="boton editar">Editar</a>
-                            <a href="eliminar_oferta.php?id=<?php echo $row["id"]; ?>" class="boton eliminar">Eliminar</a>
-                            <a href="candidatos_oferta.php?id=<?php echo $row["id"]; ?>" class="boton">Ver candidatos</a>
-                        </td>
-
-                    </tr>
-                <?php endwhile; ?>
-            <?php else: ?>
+    <div class="card">
+        <table class="tabla-ofertas">
+            <thead>
                 <tr>
-                    <td colspan="6">No hay ofertas publicadas.</td>
+                    <th>Título</th>
+                    <th>Estado</th>
+                    <th>Publicada</th>
+                    <th>Visible hasta</th>
+                    <th class="col-acciones">Acciones</th>
                 </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-</div>
-</body>
+            </thead>
+            <tbody>
+                <?php if ($resultado->num_rows > 0): ?>
+                    <?php while ($row = $resultado->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($row["titulo"]); ?></td>
 
-</html>
+                            <td>
+                                <span class="estado estado-<?php echo $row["estado"]; ?>">
+                                    <?php echo ucfirst($row["estado"]); ?>
+                                </span>
+                            </td>
+
+                            <td><?php echo date("d/m/Y", strtotime($row["fecha_publicacion"])); ?></td>
+                            <td><?php echo date("d/m/Y", strtotime($row["publicar_hasta"])); ?></td>
+
+                            <td class="acciones">
+                                <a href="editar_oferta.php?id=<?php echo $row["id"]; ?>" class="boton editar">Editar</a>
+                                <a href="eliminar_oferta.php?id=<?php echo $row["id"]; ?>" class="boton eliminar">Eliminar</a>
+                                <a href="candidatos_oferta.php?id=<?php echo $row["id"]; ?>" class="boton ver">Candidatos</a>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5" class="sin-ofertas">No hay ofertas publicadas.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<?php include __DIR__ . '/includes/footer.php'; ?>

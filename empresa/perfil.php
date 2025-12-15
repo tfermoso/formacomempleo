@@ -28,13 +28,15 @@ $stmt->execute();
 $usuario = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
-$mensaje = "";
-$tipoMensaje = "";
+// ==========================
+// Detectar modo edición
+// ==========================
+$editMode = isset($_GET["edit"]) && $_GET["edit"] == 1;
 
 // ==========================
 // Procesar actualización
 // ==========================
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && $editMode) {
 
     // Empresa
     $nombreEmpresa   = limpiarTexto($_POST["nombre_empresa"]);
@@ -56,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Validaciones básicas
     if ($nombreEmpresa === "" || $emailEmpresa === "" || $nombreUsuario === "" || $emailUsuario === "") {
         setFlash("error", "Los campos obligatorios no pueden estar vacíos.");
-        header("Location: perfil.php");
+        header("Location: perfil.php?edit=1");
         exit;
     }
 
@@ -125,47 +127,79 @@ if (!empty($mensajes)) {
     <h2>Datos de la Empresa</h2>
 
     <label>Nombre empresa *</label>
-    <input type="text" name="nombre_empresa" value="<?php echo htmlspecialchars($empresa["nombre"]); ?>" required>
+    <input type="text" name="nombre_empresa"
+        value="<?php echo htmlspecialchars($empresa["nombre"]); ?>"
+        <?php echo $editMode ? "" : "readonly"; ?>>
 
     <label>Email empresa *</label>
-    <input type="email" name="email_empresa" value="<?php echo htmlspecialchars($empresa["email_contacto"]); ?>" required>
+    <input type="email" name="email_empresa"
+        value="<?php echo htmlspecialchars($empresa["email_contacto"]); ?>"
+        <?php echo $editMode ? "" : "readonly"; ?>>
 
     <label>Teléfono</label>
-    <input type="text" name="telefono_empresa" value="<?php echo htmlspecialchars($empresa["telefono"]); ?>">
+    <input type="text" name="telefono_empresa"
+        value="<?php echo htmlspecialchars($empresa["telefono"]); ?>"
+        <?php echo $editMode ? "" : "readonly"; ?>>
 
     <label>Web</label>
-    <input type="text" name="web_empresa" value="<?php echo htmlspecialchars($empresa["web"]); ?>">
+    <input type="text" name="web_empresa"
+        value="<?php echo htmlspecialchars($empresa["web"]); ?>"
+        <?php echo $editMode ? "" : "readonly"; ?>>
 
     <label>Persona de contacto</label>
-    <input type="text" name="persona_contacto" value="<?php echo htmlspecialchars($empresa["persona_contacto"]); ?>">
+    <input type="text" name="persona_contacto"
+        value="<?php echo htmlspecialchars($empresa["persona_contacto"]); ?>"
+        <?php echo $editMode ? "" : "readonly"; ?>>
 
     <label>Dirección</label>
-    <input type="text" name="direccion" value="<?php echo htmlspecialchars($empresa["direccion"]); ?>">
+    <input type="text" name="direccion"
+        value="<?php echo htmlspecialchars($empresa["direccion"]); ?>"
+        <?php echo $editMode ? "" : "readonly"; ?>>
 
     <label>CP</label>
-    <input type="text" name="cp" value="<?php echo htmlspecialchars($empresa["cp"]); ?>">
+    <input type="text" name="cp"
+        value="<?php echo htmlspecialchars($empresa["cp"]); ?>"
+        <?php echo $editMode ? "" : "readonly"; ?>>
 
     <label>Ciudad</label>
-    <input type="text" name="ciudad" value="<?php echo htmlspecialchars($empresa["ciudad"]); ?>">
+    <input type="text" name="ciudad"
+        value="<?php echo htmlspecialchars($empresa["ciudad"]); ?>"
+        <?php echo $editMode ? "" : "readonly"; ?>>
 
     <label>Provincia</label>
-    <input type="text" name="provincia" value="<?php echo htmlspecialchars($empresa["provincia"]); ?>">
+    <input type="text" name="provincia"
+        value="<?php echo htmlspecialchars($empresa["provincia"]); ?>"
+        <?php echo $editMode ? "" : "readonly"; ?>>
 
     <h2>Datos del Usuario Responsable</h2>
 
     <label>Nombre *</label>
-    <input type="text" name="nombre_usuario" value="<?php echo htmlspecialchars($usuario["nombre"]); ?>" required>
+    <input type="text" name="nombre_usuario"
+        value="<?php echo htmlspecialchars($usuario["nombre"]); ?>"
+        <?php echo $editMode ? "" : "readonly"; ?>>
 
     <label>Apellidos *</label>
-    <input type="text" name="apellidos_usuario" value="<?php echo htmlspecialchars($usuario["apellidos"]); ?>" required>
+    <input type="text" name="apellidos_usuario"
+        value="<?php echo htmlspecialchars($usuario["apellidos"]); ?>"
+        <?php echo $editMode ? "" : "readonly"; ?>>
 
     <label>Email *</label>
-    <input type="email" name="email_usuario" value="<?php echo htmlspecialchars($usuario["email"]); ?>" required>
+    <input type="email" name="email_usuario"
+        value="<?php echo htmlspecialchars($usuario["email"]); ?>"
+        <?php echo $editMode ? "" : "readonly"; ?>>
 
     <label>Teléfono *</label>
-    <input type="text" name="telefono_usuario" value="<?php echo htmlspecialchars($usuario["telefono"]); ?>" required>
+    <input type="text" name="telefono_usuario"
+        value="<?php echo htmlspecialchars($usuario["telefono"]); ?>"
+        <?php echo $editMode ? "" : "readonly"; ?>>
 
-    <button type="submit" class="boton guardar">Guardar cambios</button>
+    <?php if ($editMode): ?>
+        <button type="submit" class="boton guardar">Guardar cambios</button>
+        <a href="perfil.php" class="boton volver">Cancelar</a>
+    <?php else: ?>
+        <a href="perfil.php?edit=1" class="boton editar">Editar perfil</a>
+    <?php endif; ?>
+
 </form>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>

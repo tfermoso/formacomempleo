@@ -1,0 +1,304 @@
+/* Header área empresa */
+.header-empresa {
+    background-color: #44598a;
+    color: #ffffff;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-empresa .logo-empresa {
+    height: 40px;
+}
+
+.header-empresa nav ul {
+    list-style: none;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+
+.header-empresa nav a {
+    color: #e5e7eb;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.header-empresa nav a:hover {
+    color: #ffffff;
+}
+
+/* Menú usuario */
+.menu-usuario {
+    position: relative;
+    cursor: pointer;
+}
+
+.menu-usuario .usuario-nombre {
+    font-weight: 500;
+}
+
+.menu-usuario .submenu {
+    position: absolute;
+    right: 0;
+    top: 120%;
+    background: #ffffff;
+    color: #111827;
+    list-style: none;
+    padding: 8px 0;
+    border-radius: 6px;
+    min-width: 160px;
+    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
+    display: none;
+    z-index: 20;
+}
+
+.menu-usuario .submenu li {
+    padding: 6px 14px;
+}
+
+.menu-usuario .submenu li a {
+    color: #111827;
+    text-decoration: none;
+    display: block;
+    font-size: 0.9rem;
+}
+
+.menu-usuario .submenu li a:hover {
+    background: #f3f4f6;
+}
+
+.menu-usuario:hover .submenu {
+    display: block;
+}
+
+/* Contenido área empresa */
+.contenido-empresa {
+    padding: 20px 15px 40px;
+}
+
+/* Footer área empresa */
+.footer-empresa {
+    margin-top: 40px;
+    padding: 15px 20px;
+    background: #44598a;
+    color: #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.footer-empresa a {
+    color: #9ca3af;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.footer-empresa a:hover {
+    color: #ffffff;
+}
+
+/* Formulario perfil */
+.form-perfil {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-perfil h2 {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 6px;
+}
+
+/* ============================
+   PALETA CORPORATIVA
+   ============================ */
+:root {
+    --azul-oscuro: #0a3d62;
+    --azul: #1e6bb8;
+    --azul-claro: #e8f1fb;
+    --gris: #6c757d;
+    --gris-claro: #f5f6f8;
+    --blanco: #ffffff;
+    --rojo: #d9534f;
+    --verde: #28a745;
+    --amarillo: #ffc107;
+}
+
+/* ============================
+   LAYOUT GENERAL
+   ============================ */
+.dashboard-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 25px 15px 60px;
+}
+
+/* ============================
+   TITULOS
+   ============================ */
+.titulo-dashboard {
+    font-size: 1.9rem;
+    color: var(--azul-oscuro);
+    margin-bottom: 10px;
+}
+
+.bienvenida {
+    font-size: 1rem;
+    color: var(--gris);
+    margin-bottom: 25px;
+}
+
+/* ============================
+   BOTONES
+   ============================ */
+.boton {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: 0.2s ease;
+    color: var(--blanco);
+}
+
+.boton.nuevo {
+    background: var(--azul);
+}
+
+.boton.nuevo:hover {
+    background: var(--azul-oscuro);
+}
+
+.boton.editar {
+    background: var(--azul);
+}
+
+.boton.editar:hover {
+    background: var(--azul-oscuro);
+}
+
+.boton.eliminar {
+    background: var(--rojo);
+}
+
+.boton.eliminar:hover {
+    background: #b52b27;
+}
+
+.boton.ver {
+    background: var(--gris);
+}
+
+.boton.ver:hover {
+    background: #555;
+}
+
+/* ============================
+   ALERTAS
+   ============================ */
+.alert {
+    padding: 12px 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.alert-error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* ============================
+   TABLAS
+   ============================ */
+.card {
+    background: var(--blanco);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.tabla-ofertas {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.tabla-ofertas th {
+    background: var(--azul-claro);
+    color: var(--azul-oscuro);
+    padding: 12px;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.tabla-ofertas td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 0.9rem;
+}
+
+.tabla-ofertas tr:hover {
+    background: #f0f6ff;
+}
+
+.col-acciones {
+    width: 240px;
+}
+
+.sin-ofertas {
+    text-align: center;
+    padding: 20px;
+    color: var(--gris);
+}
+
+/* ============================
+   ESTADOS DE OFERTA
+   ============================ */
+.estado {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.estado-publicada {
+    background: #d4edda;
+    color: #155724;
+}
+
+.estado-borrador {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.estado-pausada {
+    background: #e2e3e5;
+    color: #383d41;
+}
+
+.estado-cerrada {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.estado-vencida {
+    background: #f5c6cb;
+    color: #721c24;
+}

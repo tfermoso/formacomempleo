@@ -44,6 +44,5 @@ if (!$candidato) {
         <p><a href="../<?php echo htmlspecialchars($candidato["cv"]); ?>" download>Descargar CV en PDF</a></p>
     <?php endif; ?>
     <a href="dashboard.php" class="boton volver">Volver</a>
-</body>
 
-</html>
+    <?php include __DIR__ . '/includes/footer.php'; ?>

@@ -55,6 +55,4 @@ include './includes/header.php';
     <label>Password: <input type="password" name="password" required></label><br><br>
     <button type="submit" class="boton nuevo">Entrar</button>
 </form>
-</body>
-
-</html>
+<?php include __DIR__ . '/includes/footer.php'; ?>

@@ -1,0 +1,213 @@
+/* Tipografía y reset básico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333333;
+    background-color: #f4f5f7;
+}
+
+/* Contenedor principal */
+.main-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 15px 50px;
+}
+
+/* Titulares */
+h1,
+h2,
+h3 {
+    font-weight: 600;
+    color: #1f2a44;
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 1.9rem;
+}
+
+h2 {
+    font-size: 1.4rem;
+    margin-top: 25px;
+}
+
+/* Formularios */
+form {
+    background: #ffffff;
+    padding: 20px 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    margin-top: 15px;
+}
+
+label {
+    display: block;
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+    color: #4b5563;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="url"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 4px;
+    border: 1px solid #d1d5db;
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.2);
+    outline: none;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Botones generales */
+.boton,
+button {
+    display: inline-block;
+    border-radius: 4px;
+    border: none;
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+/* Botón principal (azul) */
+.boton.nuevo,
+.boton.guardar,
+button[type="submit"] {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+.boton.nuevo:hover,
+.boton.guardar:hover,
+button[type="submit"]:hover {
+    background-color: #1d4ed8;
+}
+
+/* Botón secundario / volver */
+.boton.volver {
+    background-color: #6b7280;
+    color: #ffffff;
+    margin-left: 10px;
+}
+
+.boton.volver:hover {
+    background-color: #4b5563;
+}
+
+/* Botón editar */
+.boton.editar {
+    background-color: #10b981;
+    color: #ffffff;
+}
+
+.boton.editar:hover {
+    background-color: #059669;
+}
+
+/* Mensajes */
+.mensaje-success,
+.alert-success {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    background: #ecfdf5;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+    font-size: 0.9rem;
+}
+
+.mensaje-error,
+.alert-error {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    font-size: 0.9rem;
+}
+
+/* Enlaces */
+a {
+    color: #2563eb;
+}
+
+a:hover {
+    color: #1d4ed8;
+}
+
+/* Tablas (por si las usas en dashboard) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: #ffffff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+th,
+td {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+}
+
+th {
+    background: #f3f4f6;
+    text-align: left;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+tr:nth-child(even) {
+    background: #f9fafb;
+}
+
+/* Responsive básico */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 20px 10px 30px;
+    }
+
+    form {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
