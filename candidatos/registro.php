@@ -1,5 +1,5 @@
 <?php
-require_once ("includes/config.php");
+require_once ("../includes/config.php");
 $errores = [];
 $exito = "";
 
@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Verificar duplicados email
         $sql = "SELECT id FROM candidatos WHERE email = ?";
-        $stmt = $db->prepare($sql);
+        $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Verificar duplicados DNI
         if (!empty($dni)) {
             $sql = "SELECT id FROM candidatos WHERE dni = ?";
-            $stmt = $db->prepare($sql);
+            $stmt = $conn->prepare($sql);
             $stmt->bind_param("s", $dni);
             $stmt->execute();
             $stmt->store_result();
@@ -115,13 +115,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Sube CV si es válido
         if (empty($errores) && !empty($_FILES["cv"]["name"])) {
-            $cv_ruta_final = "uploads/cv/" . uniqid("CV_") . ".pdf";
+            $cv_ruta_final = "../uploads/cv/" . uniqid("CV_") . ".pdf";
             move_uploaded_file($_FILES["cv"]["tmp_name"], $cv_ruta_final);
         }
 
         // Sube FOTO si es válida
         if (empty($errores) && !empty($_FILES["foto"]["name"])) {
-            $foto_ruta_final = "uploads/fotos/" . uniqid("FOTO_") . "." . $extension_foto;
+            $foto_ruta_final = "../uploads/fotos/" . uniqid("FOTO_") . "." . $extension_foto;
             move_uploaded_file($_FILES["foto"]["tmp_name"], $foto_ruta_final);
         }
 
@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 (dni, nombre, apellidos, telefono, email, password_hash, linkedin, web, direccion, cp, ciudad, provincia, fecha_nacimiento, cv, foto)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            $stmt = $db->prepare($sql);
+            $stmt = $conn->prepare($sql);
             $stmt->bind_param(
                 "sssssssssssssss",
                 $dni,
@@ -154,15 +154,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $foto_ruta_final
             );
 
-            if ($stmt->execute()) {
-                $exito = "Registro completado con éxito.";
+           if ($stmt->execute()) {
+    // Redirigir al login
+                header("Location: login.php");
+                exit;
             } else {
-                $errores[] = "Error al guardar: " . $db->error;
+                $errores[] = "Error al guardar: " . $conn->error;
             }
+
         }
 
         $stmt->close();
-        $db->close();
+        $conn->close();
     }
 }
 ?>
@@ -263,4 +266,4 @@ inputFoto.addEventListener('change', function(){
 
 </body>
 </html>
-<?php include 'includes/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>

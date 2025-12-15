@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-require_once 'includes/header.php';
+require_once '../includes/header.php';
 
-require_once  'includes/config.php';
-require_once  'includes/functions.php';
+require_once  '../includes/config.php';
+require_once  '../includes/functions.php';
 
 if (!isset($_SESSION['idcandidato'])) {
     echo "Acceso denegado. Inicia sesión.";
@@ -216,4 +216,4 @@ function toggleDetalles(id) {
 </body>
 
 </html>
-<?php include 'includes/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>

@@ -28,67 +28,6 @@ $logo = "../media/img/logo.png";
     <meta charset="UTF-8">
     <title>Área del candidato</title>
 
-    <style>
-        body { margin: 0; font-family: Arial; }
-
-        .header {
-            background: #1e88e5;
-            color: white;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header img.logo {
-            height: 45px;
-        }
-
-        .perfil-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            position: relative;
-        }
-
-        .perfil-header img.foto {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid white;
-        }
-
-        .nombre {
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .dropdown {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 55px;
-            background: white;
-            color: black;
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-            min-width: 150px;
-        }
-
-        .dropdown a {
-            display: block;
-            padding: 10px 15px;
-            text-decoration: none;
-            color: black;
-        }
-
-        .dropdown a:hover {
-            background: #eee;
-        }
-    </style>
-
     <script>
         function toggleMenu() {
             const menu = document.getElementById("dropdown-menu");

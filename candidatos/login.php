@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'includes/config.php';
+require_once '../includes/config.php';
 
 $mensaje = "";
 
@@ -62,4 +62,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </body>
 </html>
-<?php include 'includes/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>
