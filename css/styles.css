@@ -1,170 +1,296 @@
-/* ================================
-   ESTILO GLOBAL
-================================ */
+/* =========================
+   Reset y base
+   ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 20px;
-    color: #333;
+  font-family: "Montserrat", Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+  padding-top: 70px;
 }
 
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
+h1, h2, h3, h4 {
+  color: rgb(43, 75, 123);
+  font-weight: 700;
 }
 
-/* ================================
-   FORMULARIO
-================================ */
+a {
+   padding: 0.5rem 1rem;
+  border-radius: 4px;
+  background-color: #03A9F4;
+  color: #fff;
+  font-weight: 500;
+}
+
+a:hover {
+  color: #000000;
+}
+
+/* =========================
+   Dashboard contenedor
+   ========================= */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* =========================
+   Tabs de navegación
+   ========================= */
+nav {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  background-color: #03A9F4;
+  color: #fff;
+  font-weight: 500;
+}
+
+nav a.active {
+  background-color: #2b4b7b;
+}
+
+nav a:hover {
+  background-color: #0288d1;
+}
+
+/* =========================
+   Tablas del dashboard
+   ========================= */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+table th, table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+table th {
+  background-color: rgb(43, 75, 123);
+  color: #fff;
+  font-weight: 600;
+}
+
+table tr:last-child td {
+  border-bottom: none;
+}
+
+.actions a {
+  display: inline-block;
+  margin-right: 0.5rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.actions a.edit {
+  background-color: #03A9F4;
+}
+
+.actions a.edit:hover {
+  background-color: #0288d1;
+}
+
+.actions a.delete {
+  background-color: #e53935;
+}
+
+.actions a.delete:hover {
+  background-color: #c62828;
+}
+
+/* =========================
+   Formularios de admin
+   ========================= */
 form {
-    width: 700px;
-    margin: 0 auto;
-    background: #fff;
-    padding: 25px 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.15);
-    box-sizing: border-box;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
 }
 
-/* LABELS */
+form h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.6rem;
+  color: rgb(43, 75, 123);
+}
+
 form label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 6px;
-    margin-left: 0;
-    color: #333;
-}
-/* Estilo para el asterisco de campos obligatorios */
-.obligatorio {
-    color: red;
-    margin-left: 3px;
-    font-weight: bold;
-    font-size: x-large;
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  color: #333;
 }
 
-
-/* INPUTS */
 form input[type="text"],
 form input[type="email"],
 form input[type="password"],
-form input[type="url"],
+form input[type="number"],
 form input[type="date"],
-form input[type="file"] {
+form select,
+form textarea {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+  outline: none;
+  border-color: #03A9F4;
+}
+
+form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Botones de formulario */
+form button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
+  background-color: #03A9F4;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #0288d1;
+}
+
+form a {
+  margin-left: 1rem;
+  color: #2b4b7b;
+  font-weight: 500;
+}
+
+/* =========================
+   Alertas de error
+   ========================= */
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.alert-error {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #c62828;
+}
+
+/* =========================
+   Cards estadísticas (opcional)
+   ========================= */
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: rgb(43, 75, 123);
+}
+
+.card p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+@media (max-width: 992px) {
+  table th, table td {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  nav {
+    flex-wrap: wrap;
+  }
+
+  .actions a {
+    margin-bottom: 0.3rem;
+  }
+
+  form {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  form button {
     width: 100%;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #bbb;
-    margin-bottom: 18px;
-    font-size: 14px;
-    transition: 0.2s;
-    box-sizing: border-box;
+    margin-bottom: 0.5rem;
+  }
+
+  table, .actions a {
+    font-size: 0.85rem;
+  }
+
+  .dashboard-cards {
+    grid-template-columns: 1fr;
+  }
 }
 
-form input:focus {
-    outline: none;
-    border-color: #444;
-}
-
-/* PREVISUALIZACIÓN DE FOTO */
-#preview-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-}
-
-#preview-container img {
-    max-width: 150px;
-    max-height: 150px;
-    border-radius: 6px;
-    border: 1px solid #bbb;
-    object-fit: cover;
-    display: none;
-}
-
-/* BOTONES */
-button {
-    width: 100%;
-    background: #333;
-    color: white;
-    padding: 12px;
-    border: 1px solid #111;
-    font-size: 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 5px;
-    transition: 0.2s;
-}
-
-button:hover {
-    background: #555;
-}
-
-/* ENLACE VOLVER */
-.volver {
-    display: block;
-    margin-top: 15px;
+@media (max-width: 480px) {
+  nav a {
+    flex: 1 1 100%;
     text-align: center;
-    background: #777;
-    color: white;
-    padding: 10px;
-    border-radius: 6px;
-    text-decoration: none;
-    border: 1px solid #444;
-    transition: 0.2s;
-}
+    padding: 0.75rem 0;
+  }
 
-.volver:hover {
-    background: #555;
-}
-
-/* MENSAJES DE ERROR Y ÉXITO */
-div.error-mensaje,
-div.exito-mensaje {
-    text-align: center;
-    width: 380px;
-    margin: 10px auto 20px auto;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: bold;
-    
-}
-
-div.error-mensaje {
-    background: #ffd6d6;
-    border: 1px solid #ff7b7b;
-    color: #a10000;
-}
-
-div.exito-mensaje {
-    background: #d1f8d1;
-    border: 1px solid #7ed67e;
-    color: #1b6e1b;
-}
-
-/* ================================
-   RESPONSIVE
-================================ */
-@media (max-width: 600px) {
-
-    form {
-        width: 100%;
-        padding: 20px;
-    }
-
-    button,
-    .volver {
-        width: 100%;
-        padding: 14px;
-        font-size: 17px;
-    }
-
-    h2 {
-        font-size: 22px;
-    }
-
-    #preview-container img {
-        max-width: 120px;
-        max-height: 120px;
-    }
+  table th, table td {
+    font-size: 0.8rem;
+  }
 }
