@@ -23,7 +23,7 @@ $usuarioNombre = $_SESSION["usuario_nombre"] ?? null;
 
     <header class="header-empresa">
         <div class="header-left">
-            <a href="../empresa/dashboard.php">
+            <a href="../">
                 <img src="../assets/img/logo-horizontal-1.png" alt="Formacom" class="logo-empresa">
             </a>
         </div>

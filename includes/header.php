@@ -22,8 +22,8 @@
             <!-- Navegación (desktop) -->
             <nav class="main-nav">
                 <ul>
-                    <li><a href="empresas.php">Empresas</a></li>
-                    <li><a href="candidatos.php">Candidatos</a></li>
+                    <li><a href="empresa/login.php">Empresas</a></li>
+                    <li><a href="candidato/login.php">Candidatos</a></li>
                     <li><a href="ofertas.php">Ofertas</a></li>
                 </ul>
             </nav>
