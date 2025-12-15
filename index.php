@@ -29,7 +29,7 @@
 <section class="courses">
   <h2>¿Quieres mejorar tu carrera profesional?</h2>
   <p>Realiza uno de nuestros cursos de formación para completar tu CV</p>
-  <a href="cursos.php" class="btn btn-secondary">NUESTROS CURSOS</a>
+  <a href="https://www.formacom.es/formacion/" class="btn btn-secondary">NUESTROS CURSOS</a>
 </section>
 
 <!-- Últimas ofertas -->
