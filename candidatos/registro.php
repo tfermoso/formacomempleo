@@ -73,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Registro | Formacom</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Enlaza tu CSS -->
     <link rel="stylesheet" href="../assets/css/registro.css">
 </head>
 
@@ -89,44 +88,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
 
         <form method="POST" class="form-card">
-            <label for="dni">DNI</label>
-            <input type="text" name="dni" id="dni" class="form-input">
+            <div class="form-group">
+                <label for="dni">DNI</label>
+                <input type="text" name="dni" id="dni">
+            </div>
 
-            <label for="nombre">Nombre*</label>
-            <input type="text" name="nombre" id="nombre" required class="form-input">
+            <div class="form-group">
+                <label for="nombre">Nombre*</label>
+                <input type="text" name="nombre" id="nombre" required>
+            </div>
 
-            <label for="apellidos">Apellidos*</label>
-            <input type="text" name="apellidos" id="apellidos" required class="form-input">
+            <div class="form-group">
+                <label for="apellidos">Apellidos*</label>
+                <input type="text" name="apellidos" id="apellidos" required>
+            </div>
 
-            <label for="telefono">Teléfono</label>
-            <input type="text" name="telefono" id="telefono" class="form-input">
+            <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <input type="text" name="telefono" id="telefono">
+            </div>
 
-            <label for="email">Email*</label>
-            <input type="email" name="email" id="email" required class="form-input">
+            <div class="form-group">
+                <label for="email">Email*</label>
+                <input type="email" name="email" id="email" required>
+            </div>
 
-            <label for="password">Contraseña*</label>
-            <input type="password" name="password" id="password" required class="form-input">
+            <div class="form-group">
+                <label for="password">Contraseña*</label>
+                <input type="password" name="password" id="password" required>
+            </div>
 
-            <label for="linkedin">LinkedIn</label>
-            <input type="text" name="linkedin" id="linkedin" class="form-input">
+            <div class="form-group">
+                <label for="linkedin">LinkedIn</label>
+                <input type="text" name="linkedin" id="linkedin">
+            </div>
 
-            <label for="web">Web personal</label>
-            <input type="text" name="web" id="web" class="form-input">
+            <div class="form-group">
+                <label for="web">Web personal</label>
+                <input type="text" name="web" id="web">
+            </div>
 
-            <label for="direccion">Dirección</label>
-            <input type="text" name="direccion" id="direccion" class="form-input">
+            <div class="form-group">
+                <label for="direccion">Dirección</label>
+                <input type="text" name="direccion" id="direccion">
+            </div>
 
-            <label for="cp">Código postal</label>
-            <input type="text" name="cp" id="cp" class="form-input">
+            <div class="form-group">
+                <label for="cp">Código postal</label>
+                <input type="text" name="cp" id="cp">
+            </div>
 
-            <label for="ciudad">Ciudad</label>
-            <input type="text" name="ciudad" id="ciudad" class="form-input">
+            <div class="form-group">
+                <label for="ciudad">Ciudad</label>
+                <input type="text" name="ciudad" id="ciudad">
+            </div>
 
-            <label for="provincia">Provincia</label>
-            <input type="text" name="provincia" id="provincia" class="form-input">
+            <div class="form-group">
+                <label for="provincia">Provincia</label>
+                <input type="text" name="provincia" id="provincia">
+            </div>
 
-            <label for="fecha_nacimiento">Fecha de nacimiento</label>
-            <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="form-input">
+            <div class="form-group">
+                <label for="fecha_nacimiento">Fecha de nacimiento</label>
+                <input type="date" name="fecha_nacimiento" id="fecha_nacimiento">
+            </div>
 
             <button type="submit" class="btn btn-primary">Registrarse</button>
         </form>
