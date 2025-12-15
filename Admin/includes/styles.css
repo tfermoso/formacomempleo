@@ -1,0 +1,258 @@
+/* =========================
+   General
+========================= */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 1.5rem auto;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* =========================
+   Navegación y pestañas
+========================= */
+nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+nav a {
+    padding: 0.6rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #6c757d;
+    transition: background-color 0.2s;
+}
+
+nav a:hover {
+    background-color: #495057;
+}
+
+nav a.active {
+    background-color: #007bff;
+}
+
+/* =========================
+   Acciones (crear/editar/borrar)
+========================= */
+.actions a.create {
+    background-color: #28a745;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.actions a.create:hover {
+    background-color: #218838;
+}
+
+.actions a.edit {
+    background-color: #ffc107;
+    color: #212529;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-right: 0.3rem;
+}
+
+.actions a.edit:hover {
+    background-color: #e0a800;
+}
+
+.actions a.delete {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.actions a.delete:hover {
+    background-color: #c82333;
+}
+
+/* =========================
+   Tablas
+========================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+}
+
+table th, table td {
+    border: 1px solid #dee2e6;
+    padding: 0.6rem;
+    text-align: left;
+}
+
+table th {
+    background-color: #f8f9fa;
+}
+
+.actions td {
+    white-space: nowrap;
+}
+
+/* =========================
+   Mensajes de éxito y error
+========================= */
+.alert {
+    text-align: center;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .actions a.create {
+        width: 100%;
+        text-align: center;
+    }
+
+    table th, table td {
+        font-size: 0.9rem;
+        padding: 0.4rem;
+    }
+
+    .actions a.edit, .actions a.delete {
+        padding: 0.3rem 0.4rem;
+        font-size: 0.85rem;
+    }
+}
+/* =========================
+   Login Administrador
+========================= */
+body h2 {
+    text-align: center;
+    color: #333;
+    margin-top: 2rem;
+}
+
+form {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+    color: #555;
+}
+
+form input[type="email"],
+form input[type="password"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+form button {
+    width: 100%;
+    padding: 0.6rem;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Mensaje de error centrado con fondo */
+form p {
+    text-align: center;
+    padding: 0.5rem;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    form {
+        margin: 1rem;
+        padding: 1rem;
+    }
+}
+/* Estilo de los enlaces 'Crear' como botones */
+a.create {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    margin-bottom: 1rem;
+    background-color: #007bff;  /* Azul */
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+a.create:hover {
+    background-color: #0056b3; /* Azul más oscuro en hover */
+    transform: translateY(-2px);  /* Sube ligeramente cuando pasa el mouse */
+}
+
+a.create:active {
+    background-color: #004085;  /* Azul aún más oscuro cuando se hace clic */
+    transform: translateY(0);  /* Vuelve a la posición original al hacer clic */
+}
