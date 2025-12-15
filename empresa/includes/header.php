@@ -15,6 +15,8 @@ $usuarioNombre = $_SESSION["usuario_nombre"] ?? null;
     <meta charset="UTF-8">
     <title>Área Empresa - Formacom</title>
     <link rel="stylesheet" href="../assets/css/empresa.css">
+    <link rel="icon" type="image/x-icon" href="../assets/img/logo.ico">
+
 </head>
 
 <body>

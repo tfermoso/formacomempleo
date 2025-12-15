@@ -55,4 +55,9 @@ include './includes/header.php';
     <label>Password: <input type="password" name="password" required></label><br><br>
     <button type="submit" class="boton nuevo">Entrar</button>
 </form>
+
+<p style="margin-top:10px;">
+    <a href="recuperar.php">¿Olvidaste tu contraseña?</a>
+</p>
+
 <?php include __DIR__ . '/includes/footer.php'; ?>

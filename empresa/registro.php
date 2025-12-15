@@ -160,6 +160,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Confirmar transacción
         $mysqli->commit();
 
+        require_once __DIR__ . "/../includes/emails.php";
+        enviarEmailRegistroEmpresa($emailEmpresa, $nombreEmpresa);
+
+
         setFlash('success', 'Empresa registrada correctamente.');
         header("Location: ../login.php");
         exit;
