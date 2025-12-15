@@ -5,7 +5,6 @@ require_once '../includes/config.php';
 $mensaje = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
 
@@ -18,23 +17,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $candidato = $resultado->fetch_assoc();
 
         if (password_verify($password, $candidato['password_hash'])) {
-
             $_SESSION['idcandidato'] = $candidato['id'];
             header("Location: dashboard.php");
             exit;
-
         } else {
             $mensaje = "Contraseña incorrecta.";
         }
-
     } else {
         $mensaje = "No existe una cuenta con ese email.";
     }
 }
-?>
-
-<?php
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -47,29 +39,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+    <?php include '../candidatos/includes/header.php'; ?>
 
-    <?php include '../includes/header.php'; ?>
-
-    <main class="container">
-        <h2 class="hero-title">Iniciar sesión</h2>
+    <main class="contenido-empresa login-form">
+        <h1>Iniciar sesión</h1>
 
         <?php if ($mensaje): ?>
-            <div class="alert"><?php echo $mensaje; ?></div>
+            <div class="mensaje-error"><?php echo $mensaje; ?></div>
         <?php endif; ?>
 
-        <form method="POST" class="form-card">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" required class="form-input">
+        <form method="POST">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+            </div>
 
-            <label for="password">Contraseña</label>
-            <input type="password" name="password" id="password" required class="form-input">
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" name="password" id="password" required>
+            </div>
 
-            <button type="submit" class="btn btn-primary">Entrar</button>
+            <button type="submit">Entrar</button>
         </form>
+
+        <div class="login-links">
+            <a href="registro.php"><strong>¿No tienes cuenta?</strong> Regístrate</a><br>
+            <a href="recuperar.php">¿Olvidaste tu contraseña?</a>
+        </div>
     </main>
 
-    <?php include '../includes/footer.php'; ?>
-
+    <footer class="footer-empresa">
+        &copy; <?php echo date('Y'); ?> Formacom Empleo. Todos los derechos reservados.
+    </footer>
 </body>
 
 </html>

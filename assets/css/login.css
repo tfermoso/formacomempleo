@@ -5,8 +5,8 @@
   box-sizing: border-box;
 }
 
-/* Layout general */
-html, body {
+html,
+body {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -17,11 +17,12 @@ body {
   line-height: 1.6;
   color: #333;
   background-color: #f9f9f9;
-  padding-top: 70px; /* espacio para header fijo */
+  padding-top: 70px;
+  /* espacio para header fijo */
 }
 
-/* Header */
-.site-header {
+/* Header corporativo */
+.header-empresa {
   position: fixed;
   top: 0;
   left: 0;
@@ -30,50 +31,61 @@ body {
   color: rgb(43, 75, 123);
   padding: 1rem;
   border-bottom: 1px solid #ddd;
-  z-index: 1000;
-}
-
-.site-header .container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 1000;
 }
 
-.logo-img {
+.logo-empresa {
   height: 48px;
   width: auto;
   vertical-align: middle;
 }
 
-.main-nav ul {
+.menu-principal {
   list-style: none;
   display: flex;
   gap: 1.2rem;
 }
 
-.main-nav a {
+.menu-principal a {
   color: rgb(43, 75, 123);
   text-decoration: none;
   font-weight: 500;
   font-size: 0.9rem;
 }
 
-.main-nav a:hover {
+.menu-principal a:hover {
   text-decoration: underline;
 }
 
-/* Contenedor principal */
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 1.5rem 1rem;
+/* Submenú usuario */
+.menu-usuario {
+  position: relative;
+}
+
+.menu-usuario .submenu {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  list-style: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+.menu-usuario .submenu a {
+  color: rgb(43, 75, 123);
+}
+
+.menu-usuario:hover .submenu {
+  display: block;
 }
 
 /* Título */
-.hero-title {
+h1 {
   font-size: 1.6rem;
   font-weight: 700;
   color: #2b4b7b;
@@ -81,86 +93,111 @@ body {
   text-align: center;
 }
 
-/* Mensajes */
-.alert {
-  background-color: #f8d7da; /* error por defecto */
-  color: #721c24;
-  padding: 0.75rem;
-  border-radius: 4px;
-  margin-bottom: 1rem;
-  text-align: center;
+/* Formulario login */
+.login-form {
+  flex: 1;
+  /* ocupa el espacio restante */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* centra verticalmente */
+  align-items: center;
+  /* centra horizontalmente */
+  padding: 2rem 1rem;
 }
 
-/* Tarjeta de formulario */
-.form-card {
+.login-form form {
+  display: block;
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
   background: #fff;
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
 }
 
-/* Inputs */
-.form-card label {
+.login-form .form-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
   font-size: 0.9rem;
   font-weight: 600;
   color: #333;
-  display: block;
-  margin-bottom: 0.5rem;
 }
 
-.form-input {
+input {
   width: 100%;
   padding: 0.75rem;
-  margin-bottom: 1rem;
+  margin-top: 0.3rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 1.05rem;
 }
 
-/* Botones */
-.btn {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  border: none;
-}
-
-.btn-primary {
+.login-form button {
+  width: 100%;
+  padding: 0.75rem;
   background-color: #03a9f4;
   color: #fff;
-  width: 100%;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.btn-primary:hover {
+.login-form button:hover {
   background-color: #0288d1;
 }
 
+/* Links debajo del formulario */
+.login-links {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.login-links a {
+  display: inline-block;
+  margin: 0.25rem 0;
+  font-size: 0.85rem;
+  color: #2b4b7b;
+  text-decoration: none;
+}
+
+.login-links a strong {
+  font-weight: 600;
+}
+
+.login-links a:hover {
+  text-decoration: underline;
+}
+
+/* Mensajes */
+.mensaje-success {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.mensaje-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
 /* Footer */
-.site-footer {
+.footer-empresa {
   background-color: #222;
   color: #ccc;
   text-align: center;
   padding: 1rem;
   font-size: 0.9rem;
-  margin-top: auto; /* empuja el footer al fondo */
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .site-header .container {
-    padding: 0 1rem;
-  }
-
-  .container {
-    padding: 1rem;
-  }
-
-  .form-card {
-    padding: 1.5rem;
-  }
+  margin-top: auto;
+  /* empuja el footer al fondo */
 }

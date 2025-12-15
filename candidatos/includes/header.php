@@ -64,7 +64,7 @@ $logo = "../assets/img/logo-horizontal-1.png";
         <div class="container">
             <!-- Logo a la izquierda -->
             <a href="index.php" class="logo">
-                <img src="assets/img/logo-vertical-1.png" alt="Logo Formacom" class="logo-img">
+                <img src="../assets/img/logo-horizontal-1.png" alt="Logo Formacom" class="logo-img">
             </a>
 
             <!-- Navegación (desktop) -->

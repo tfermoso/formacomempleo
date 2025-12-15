@@ -78,16 +78,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
 
-    <?php include 'includes/header.php'; ?>
+    <?php include '../candidatos/includes/header.php'; ?>
 
-    <main>
-        <h2 class="hero-title">Registro</h2>
+    <main class="contenido-empresa">
+        <h1>Registro</h1>
 
         <?php if ($mensaje): ?>
             <div class="alert"><?php echo $mensaje; ?></div>
         <?php endif; ?>
 
-        <form method="POST" class="form-card">
+        <form method="POST">
             <div class="form-group">
                 <label for="dni">DNI</label>
                 <input type="text" name="dni" id="dni">
@@ -161,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </p>
     </main>
 
-    <?php include 'includes/footer.php'; ?>
+    <?php include '../candidatos/includes/footer.php'; ?>
 
 </body>
 
