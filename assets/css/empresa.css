@@ -5,12 +5,24 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
 body {
   font-family: "Montserrat", Arial, sans-serif;
   line-height: 1.6;
   color: #333;
   background-color: #f9f9f9;
-  padding-top: 70px; /* espacio para header fijo */
+  padding-top: 70px;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
 }
 
 .header-empresa {
@@ -83,10 +95,9 @@ h1 {
   text-align: center;
 }
 
-
 form {
   max-width: 900px;
-  margin: .5rem auto;
+  margin: 0.5rem auto;
   background: #fff;
   padding: 2rem;
   border-radius: 8px;
@@ -138,7 +149,7 @@ form button:hover {
   background-color: #0288d1;
 }
 
-.login-form form{
+.login-form form {
   display: block;
   max-width: 400px;
   margin: 2rem auto;
@@ -220,6 +231,32 @@ form button:hover {
   list-style: none;
   display: flex;
   gap: 1.2rem;
+}
+
+.table-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+  background-color: #2b4b7b;
+  color: #fff;
+}
+
+th,
+td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
 /* Responsive: menú lateral en mobile */
