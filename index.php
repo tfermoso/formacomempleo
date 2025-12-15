@@ -15,7 +15,7 @@
     <img src="assets/img/cropped-empleado-1.png" alt="Empresas">
     <h2>Busco personal</h2>
     <p>¿Necesitas ampliar la plantilla de tu empresa?</p>
-    <a href="empresa/" class="btn btn-light">ENVÍANOS TU OFERTA</a>
+    <a href="empresa/dashboard.php" class="btn btn-light">ENVÍANOS TU OFERTA</a>
   </div>
   <div class="option-block candidatos">
     <img src="assets/img/cropped-candidato-1.png" alt="Candidatos">

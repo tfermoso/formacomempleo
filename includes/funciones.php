@@ -2,7 +2,6 @@
 // Generar y comprobar token CSRF
 session_start();
 
-
 require_once __DIR__ . "/conexion.php";
 
 $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);

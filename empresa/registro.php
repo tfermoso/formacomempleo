@@ -192,62 +192,96 @@ if (!empty($mensajes)) {
 }
 ?>
 
+<div class="form-container">
 <form action="registro.php" method="post" id="formRegistroEmpresa" novalidate>
     <input type="hidden" name="csrf_token" value="<?php echo $tokenCSRF; ?>">
 
     <h2>Datos de la empresa</h2>
 
-    <label for="cif">CIF *</label>
-    <input type="text" name="cif" id="cif" required>
+    <div class="form-group">
+        <label for="cif">CIF *</label>
+        <input type="text" name="cif" id="cif" required>
+    </div>
 
-    <label for="nombre_empresa">Nombre empresa *</label>
-    <input type="text" name="nombre_empresa" id="nombre_empresa" required>
+    <div class="form-group">
+        <label for="nombre_empresa">Nombre empresa *</label>
+        <input type="text" name="nombre_empresa" id="nombre_empresa" required>
+    </div>
 
-    <label for="email_empresa">Email empresa *</label>
-    <input type="email" name="email_empresa" id="email_empresa" required>
+    <div class="form-group">
+        <label for="email_empresa">Email empresa *</label>
+        <input type="email" name="email_empresa" id="email_empresa" required>
+    </div>
 
-    <label for="telefono_empresa">Teléfono empresa</label>
-    <input type="text" name="telefono_empresa" id="telefono_empresa">
+    <div class="form-group">
+        <label for="telefono_empresa">Teléfono empresa</label>
+        <input type="text" name="telefono_empresa" id="telefono_empresa">
+    </div>
 
-    <label for="web_empresa">Web</label>
-    <input type="url" name="web_empresa" id="web_empresa">
+    <div class="form-group">
+        <label for="web_empresa">Web</label>
+        <input type="url" name="web_empresa" id="web_empresa">
+    </div>
 
-    <label for="persona_contacto">Persona de contacto</label>
-    <input type="text" name="persona_contacto" id="persona_contacto">
+    <div class="form-group">
+        <label for="persona_contacto">Persona de contacto</label>
+        <input type="text" name="persona_contacto" id="persona_contacto">
+    </div>
 
-    <label for="direccion_empresa">Dirección</label>
-    <input type="text" name="direccion_empresa" id="direccion_empresa">
+    <div class="form-group">
+        <label for="direccion_empresa">Dirección</label>
+        <input type="text" name="direccion_empresa" id="direccion_empresa">
+    </div>
 
-    <label for="cp_empresa">CP</label>
-    <input type="text" name="cp_empresa" id="cp_empresa">
+    <div class="form-group">
+        <label for="cp_empresa">CP</label>
+        <input type="text" name="cp_empresa" id="cp_empresa">
+    </div>
 
-    <label for="ciudad_empresa">Ciudad</label>
-    <input type="text" name="ciudad_empresa" id="ciudad_empresa">
+    <div class="form-group">
+        <label for="ciudad_empresa">Ciudad</label>
+        <input type="text" name="ciudad_empresa" id="ciudad_empresa">
+    </div>
 
-    <label for="provincia_empresa">Provincia</label>
-    <input type="text" name="provincia_empresa" id="provincia_empresa">
+    <div class="form-group">
+        <label for="provincia_empresa">Provincia</label>
+        <input type="text" name="provincia_empresa" id="provincia_empresa">
+    </div>
 
     <h2>Datos del usuario responsable</h2>
 
-    <label for="nombre_usuario">Nombre *</label>
-    <input type="text" name="nombre_usuario" id="nombre_usuario" required>
+    <div class="form-group">
+        <label for="nombre_usuario">Nombre *</label>
+        <input type="text" name="nombre_usuario" id="nombre_usuario" required>
+    </div>
 
-    <label for="apellidos_usuario">Apellidos *</label>
-    <input type="text" name="apellidos_usuario" id="apellidos_usuario" required>
+    <div class="form-group">
+        <label for="apellidos_usuario">Apellidos *</label>
+        <input type="text" name="apellidos_usuario" id="apellidos_usuario" required>
+    </div>
 
-    <label for="email_usuario">Email usuario *</label>
-    <input type="email" name="email_usuario" id="email_usuario" required>
+    <div class="form-group">
+        <label for="email_usuario">Email usuario *</label>
+        <input type="email" name="email_usuario" id="email_usuario" required>
+    </div>
 
-    <label for="telefono_usuario">Teléfono usuario *</label>
-    <input type="text" name="telefono_usuario" id="telefono_usuario" required>
+    <div class="form-group">
+        <label for="telefono_usuario">Teléfono usuario *</label>
+        <input type="text" name="telefono_usuario" id="telefono_usuario" required>
+    </div>
 
-    <label for="password">Contraseña *</label>
-    <input type="password" name="password" id="password" required>
+    <div class="form-group">
+        <label for="password">Contraseña *</label>
+        <input type="password" name="password" id="password" required>
+    </div>
 
-    <label for="password2">Repite la contraseña *</label>
-    <input type="password" name="password2" id="password2" required>
+    <div class="form-group">
+        <label for="password2">Repite la contraseña *</label>
+        <input type="password" name="password2" id="password2" required>
+    </div>
 
     <button type="submit" name="registrar">Registrar empresa</button>
 </form>
+</div>
 
 <?php include './includes/footer.php'; ?>

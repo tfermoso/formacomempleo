@@ -14,7 +14,9 @@ $usuarioNombre = $_SESSION["usuario_nombre"] ?? null;
 <head>
     <meta charset="UTF-8">
     <title>Área Empresa - Formacom</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/empresa.css">
+    <script src="../assets/js/empresa.js" defer></script>
 </head>
 
 <body>
@@ -22,9 +24,11 @@ $usuarioNombre = $_SESSION["usuario_nombre"] ?? null;
     <header class="header-empresa">
         <div class="header-left">
             <a href="../empresa/dashboard.php">
-                <img src="../assets/img/logo.png" alt="Formacom" class="logo-empresa">
+                <img src="../assets/img/logo-horizontal-1.png" alt="Formacom" class="logo-empresa">
             </a>
         </div>
+
+        <button class="nav-toggle-empresa">☰</button>
 
         <nav class="header-right">
             <ul class="menu-principal">
@@ -56,5 +60,7 @@ $usuarioNombre = $_SESSION["usuario_nombre"] ?? null;
             </ul>
         </nav>
     </header>
+
+    <div class="nav-overlay-empresa"></div>
 
     <main class="contenido-empresa">
