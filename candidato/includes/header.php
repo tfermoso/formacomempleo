@@ -14,7 +14,7 @@ $usuarioNombre = $_SESSION["candidato_nombre"] ?? null;
     <meta charset="UTF-8">
     <title>Área Candidato - Formacom</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/empresa.css">
+    <link rel="stylesheet" href="../assets/css/candidato.css">
     <script src="../assets/js/empresa.js" defer></script>
 </head>
 
@@ -34,9 +34,7 @@ $usuarioNombre = $_SESSION["candidato_nombre"] ?? null;
 
                 <?php if ($usuarioLogueado): ?>
 
-                    <li><a href="../empresa/dashboard.php">Dashboard</a></li>
-                    <li><a href="../empresa/crear_oferta.php">Ofertas</a></li>
-                    <li><a href="../empresa/perfil.php">Mi Empresa</a></li>
+                    <li><a href="../candidato/dashboard.php">Dashboard</a></li>
 
                     <li class="menu-usuario">
                         <span class="usuario-nombre">
@@ -44,8 +42,8 @@ $usuarioNombre = $_SESSION["candidato_nombre"] ?? null;
                         </span>
 
                         <ul class="submenu">
-                            <li><a href="../empresa/perfil.php">Perfil</a></li>
-                            <li><a href="../empresa/logout.php">Cerrar sesión</a></li>
+                            <li><a href="../candidato/perfil.php">Perfil</a></li>
+                            <li><a href="../candidato/logout.php">Cerrar sesión</a></li>
                         </ul>
                     </li>
 
@@ -62,4 +60,4 @@ $usuarioNombre = $_SESSION["candidato_nombre"] ?? null;
 
     <div class="nav-overlay-empresa"></div>
 
-    <main class="contenido-empresa">
+    <main class="contenido-candidato">

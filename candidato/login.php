@@ -2,6 +2,13 @@
 require_once __DIR__ . "/../includes/config.php";
 require_once __DIR__ . "/../includes/funciones.php";
 
+if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+if(isset($_SESSION["idcandidato"])&& $_SESSION["idcandidato"]!="" && isset($_SESSION["candidato_nombre"])&& $_SESSION["candidato_nombre"]!=""){
+    header("Location: dashboard.php");
+    exit;
+}
 $conn = conectarBD();
 $mensaje = "";
 
@@ -22,7 +29,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->close();
 
     if ($candidato && password_verify($password, $candidato["password_hash"])) {
-
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         $_SESSION["idcandidato"] = $candidato["id"];
         $_SESSION["candidato_nombre"] = $candidato["nombre"] . " " . $candidato["apellidos"];
 

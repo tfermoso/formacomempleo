@@ -146,22 +146,55 @@ function actualizarCandidato(mysqli $conn, int $id, array $data) {
     return $stmt->execute();
 }
 
-function subirArchivo($file, $destino, $permitidos) {
-    if ($file['error'] !== UPLOAD_ERR_OK) return false;
+function subirArchivo(array $archivo, string $carpetaRelativa, array $extensionesPermitidas)
+{
+    if ($archivo['error'] !== UPLOAD_ERR_OK) {
+        return false;
+    }
 
-    $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    $extension = strtolower(pathinfo($archivo['name'], PATHINFO_EXTENSION));
 
-    if (!in_array($ext, $permitidos)) return false;
+    if (!in_array($extension, $extensionesPermitidas)) {
+        return false;
+    }
 
-    $nombreFinal = uniqid() . "." . $ext;
-    $ruta = $destino . $nombreFinal;
+    // 📍 Ruta ABSOLUTA en el servidor
+    $rutaBase = realpath(__DIR__ . '/../'); // formacomempleo/
+    $rutaDestino = $rutaBase . '/' . trim($carpetaRelativa, '/');
 
-    if (move_uploaded_file($file['tmp_name'], $ruta)) {
-        return $nombreFinal;
+    // 📂 Crear carpeta si no existe
+    if (!is_dir($rutaDestino)) {
+        mkdir($rutaDestino, 0755, true);
+    }
+
+    $nombreArchivo = uniqid() . '.' . $extension;
+    $rutaFinal = $rutaDestino . '/' . $nombreArchivo;
+
+    if (move_uploaded_file($archivo['tmp_name'], $rutaFinal)) {
+        return $nombreArchivo; // 👈 SOLO el nombre se guarda en BBDD
     }
 
     return false;
 }
+/**
+ * Actualiza un único campo de un candidato
+ */
+function actualizarCampoCandidato(mysqli $conn, int $idCandidato, string $campo, string $valor): bool
+{
+    // Lista blanca de campos permitidos (MUY IMPORTANTE)
+    $camposPermitidos = ['foto', 'cv'];
+
+    if (!in_array($campo, $camposPermitidos)) {
+        return false;
+    }
+
+    $sql = "UPDATE candidatos SET $campo = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("si", $valor, $idCandidato);
+
+    return $stmt->execute();
+}
+
 //Funciones empresas
 function generarTokenCSRF(): string
 {
