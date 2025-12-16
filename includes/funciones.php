@@ -1,6 +1,7 @@
 <?php
 //Funciones Candidatos
-function getCandidato(mysqli $conn, int $id) {
+function getCandidato(mysqli $conn, int $id)
+{
     $stmt = $conn->prepare("
         SELECT nombre, apellidos 
         FROM candidatos 
@@ -11,7 +12,8 @@ function getCandidato(mysqli $conn, int $id) {
     return $stmt->get_result()->fetch_assoc();
 }
 
-function conectarBD() {
+function conectarBD()
+{
     $conexion = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
     if ($conexion->connect_error) {
@@ -22,7 +24,8 @@ function conectarBD() {
     return $conexion;
 }
 
-function getOfertasInscritas(mysqli $conn, int $idcandidato) {
+function getOfertasInscritas(mysqli $conn, int $idcandidato)
+{
     $sql = "
         SELECT 
             o.id,
@@ -52,7 +55,8 @@ function getOfertasInscritas(mysqli $conn, int $idcandidato) {
     return $stmt->get_result();
 }
 
-function getOfertasNoInscritas(mysqli $conn, int $idcandidato) {
+function getOfertasNoInscritas(mysqli $conn, int $idcandidato)
+{
     $sql = "
         SELECT 
             o.id,
@@ -84,7 +88,8 @@ function getOfertasNoInscritas(mysqli $conn, int $idcandidato) {
     return $stmt->get_result();
 }
 
-function eliminarInscripcion(mysqli $conn, int $idoferta, int $idcandidato): bool {
+function eliminarInscripcion(mysqli $conn, int $idoferta, int $idcandidato): bool
+{
     $stmt = $conn->prepare("
         DELETE FROM ofertas_candidatos 
         WHERE idoferta = ? AND idcandidato = ?
@@ -93,7 +98,8 @@ function eliminarInscripcion(mysqli $conn, int $idoferta, int $idcandidato): boo
     return $stmt->execute();
 }
 
-function inscribirseEnOferta(mysqli $conn, int $idoferta, int $idcandidato): bool {
+function inscribirseEnOferta(mysqli $conn, int $idoferta, int $idcandidato): bool
+{
     $stmt = $conn->prepare("
         INSERT INTO ofertas_candidatos (idoferta, idcandidato, fecha_inscripcion, estado)
         VALUES (?, ?, NOW(), 'pendiente')
@@ -105,7 +111,8 @@ function inscribirseEnOferta(mysqli $conn, int $idoferta, int $idcandidato): boo
 ?>
 <?php
 
-function getCandidatoCompleto($conn, $id) {
+function getCandidatoCompleto($conn, $id)
+{
     $stmt = $conn->prepare("SELECT * FROM candidatos WHERE id = ? AND deleted_at IS NULL");
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -113,7 +120,8 @@ function getCandidatoCompleto($conn, $id) {
 }
 
 
-function actualizarCandidato(mysqli $conn, int $id, array $data) {
+function actualizarCandidato(mysqli $conn, int $id, array $data)
+{
     $sql = "
         UPDATE candidatos SET
             nombre = ?,
@@ -241,14 +249,14 @@ function validarCIF(string $cif): bool
     $sumaImpares = 0;
 
     for ($i = 0; $i < 7; $i++) {
-        $digito = (int)$numeros[$i];
+        $digito = (int) $numeros[$i];
         if (($i + 1) % 2 === 0) {
             // posición par (2,4,6)
             $sumaPares += $digito;
         } else {
             // posición impar (1,3,5,7)
             $doble = $digito * 2;
-            $sumaImpares += (int)floor($doble / 10) + ($doble % 10);
+            $sumaImpares += (int) floor($doble / 10) + ($doble % 10);
         }
     }
 
@@ -256,7 +264,7 @@ function validarCIF(string $cif): bool
     $unidad = $sumaTotal % 10;
     $digitoControl = ($unidad === 0) ? 0 : 10 - $unidad;
 
-    $controlNumerico = (string)$digitoControl;
+    $controlNumerico = (string) $digitoControl;
     $controlLetra = 'JABCDEFGHI'[$digitoControl];
 
     // Tipos de entidades según letra inicial
@@ -302,6 +310,9 @@ function isLoggedIn()
 // Redirigir si no hay sesión iniciada
 function redirectIfNotLoggedIn()
 {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     if (!isset($_SESSION["idusuario"]) || !isset($_SESSION["idempresa"])) {
         $_SESSION["flash_msg"] = "Debes iniciar sesión.";
         $_SESSION["flash_type"] = "error";

@@ -77,10 +77,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($password !== $password2) {
         $errores[] = "Las contraseñas no coinciden.";
     }
-
+    $conn=conectarBD();
     // 4. Comprobar empresa duplicada
     if (empty($errores)) {
-        $stmt = $mysqli->prepare("SELECT id FROM empresas WHERE cif = ?");
+        $stmt = $conn->prepare("SELECT id FROM empresas WHERE cif = ?");
         $stmt->bind_param("s", $cif);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // 5. Comprobar usuario duplicado
     if (empty($errores)) {
-        $stmt = $mysqli->prepare("SELECT id FROM usuarios WHERE email = ?");
+        $stmt = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
         $stmt->bind_param("s", $emailUsuario);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // =========================
     // 6. TRANSACCIÓN MYSQLI
     // =========================
-    $mysqli->begin_transaction();
+    $conn->begin_transaction();
 
     try {
 
@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             (cif, nombre, telefono, web, persona_contacto, email_contacto, direccion, cp, ciudad, provincia, logo, verificada)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, 0)";
 
-        $stmtEmpresa = $mysqli->prepare($sqlEmpresa);
+        $stmtEmpresa = $conn->prepare($sqlEmpresa);
         $stmtEmpresa->bind_param(
             "ssssssssss",
             $cif,
@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
         $stmtEmpresa->execute();
 
-        $idEmpresa = $mysqli->insert_id;
+        $idEmpresa = $conn->insert_id;
 
         // Insert usuario
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             (nombre, apellidos, telefono, email, password_hash, idempresa, is_admin)
             VALUES (?, ?, ?, ?, ?, ?, 0)";
 
-        $stmtUsuario = $mysqli->prepare($sqlUsuario);
+        $stmtUsuario = $conn->prepare($sqlUsuario);
         $stmtUsuario->bind_param(
             "sssssi",
             $nombreUsuario,
@@ -159,13 +159,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmtUsuario->execute();
 
         // Confirmar transacción
-        $mysqli->commit();
+        $conn->commit();
 
         setFlash('success', 'Empresa registrada correctamente.');
-        header("Location: ../index.php");
+        header("Location: ./login.php");
         exit;
     } catch (Exception $e) {
-        $mysqli->rollback();
+        $conn->rollback();
         setFlash('error', 'Error al registrar la empresa. Inténtalo de nuevo.');
         header("Location: registro.php");
         exit;

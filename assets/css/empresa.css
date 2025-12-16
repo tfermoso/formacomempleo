@@ -1,8 +1,17 @@
-/* Reset básico */
+/* =========================
+   Reset básico
+========================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* =========================
+   Base
+========================= */
+html, body {
+  height: 100%;
 }
 
 body {
@@ -10,9 +19,12 @@ body {
   line-height: 1.6;
   color: #333;
   background-color: #f9f9f9;
-  padding-top: 70px; /* espacio para header fijo */
+  padding-top: 70px; /* header fijo */
 }
 
+/* =========================
+   Header
+========================= */
 .header-empresa {
   position: fixed;
   top: 0;
@@ -30,8 +42,6 @@ body {
 
 .logo-empresa {
   height: 48px;
-  width: auto;
-  vertical-align: middle;
 }
 
 .menu-principal {
@@ -47,11 +57,7 @@ body {
   font-size: 0.9rem;
 }
 
-.menu-principal a:hover {
-  text-decoration: underline;
-}
-
-/* Submenú usuario */
+/* Submenú */
 .menu-usuario {
   position: relative;
 }
@@ -60,21 +66,41 @@ body {
   display: none;
   position: absolute;
   right: 0;
-  background-color: #fff;
+  background: #fff;
   border: 1px solid #ddd;
   list-style: none;
-  padding: 0.5rem 1rem;
+  padding: .5rem 1rem;
   border-radius: 4px;
-}
-
-.menu-usuario .submenu a {
-  color: rgb(43, 75, 123);
 }
 
 .menu-usuario:hover .submenu {
   display: block;
 }
 
+/* =========================
+   Contenido + Footer sticky
+========================= */
+.contenido-empresa,
+.contenido-candidato {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.footer-empresa,
+.footer-candidato {
+  margin-top: auto;
+  background: #222;
+  color: #ccc;
+  text-align: center;
+  padding: 1rem;
+  font-size: .9rem;
+}
+
+/* =========================
+   Títulos
+========================= */
 h1 {
   font-size: 1.6rem;
   font-weight: 700;
@@ -83,221 +109,183 @@ h1 {
   text-align: center;
 }
 
+form h2 {
+  font-size: 1.2rem;
+  margin-bottom: .5rem;
+  color: #2b4b7b;
+  border-bottom: 1px solid #2b4b7b;
+}
 
+/* =========================
+   Formulario base
+========================= */
 form {
   max-width: 900px;
   margin: .5rem auto;
   background: #fff;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* dos columnas iguales */
-  gap: 1.5rem 2rem; /* espacio entre filas y columnas */
+  box-shadow: 0 2px 6px rgba(0,0,0,.1);
 }
 
-form h2 {
-  grid-column: 1 / -1; /* títulos ocupan todo el ancho */
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  color: #2b4b7b;
-  border-bottom: 1px solid #2b4b7b;
+.form-container {
+  width: 100%;
 }
 
 .form-group {
   display: flex;
-  flex-direction: column; /* label encima del input */
+  flex-direction: column;
 }
 
 label {
-  font-size: 0.9rem;
+  font-size: .9rem;
   font-weight: 600;
-  color: #333;
+  margin-bottom: .25rem;
 }
 
-input {
+/* =========================
+   Inputs estilo Bootstrap
+========================= */
+.form-group input,
+.form-group select,
+.form-group textarea {
   width: 100%;
-  padding: 0.75rem;
-  margin-top: 0.3rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  min-height: 44px;
+  padding: .6rem .75rem;
+  font-size: .95rem;
+  border: 1px solid #ced4da;
+  border-radius: .375rem;
+  transition: border-color .15s, box-shadow .15s;
 }
 
-form button {
-  grid-column: 1 / -1; /* botón ocupa todo el ancho */
-  padding: 0.75rem;
-  background-color: #03a9f4;
-  color: #fff;
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: 0;
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 .15rem rgba(13,110,253,.25);
+}
+
+.form-group select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23343a40' d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592c.86 0 1.319 1.013.753 1.658L8.753 11.14a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .75rem center;
+  background-size: 16px 12px;
+  padding-right: 2.25rem;
+}
+
+/* =========================
+   Botones
+========================= */
+form button,
+.btn-primary {
+  margin-top: 1rem;
+  min-height: 44px;
+  padding: .6rem 1.2rem;
+  font-size: .95rem;
   font-weight: 600;
-  border: none;
-  border-radius: 4px;
+  background: #0d6efd;
+  color: #fff;
+  border: 1px solid #0d6efd;
+  border-radius: .375rem;
   cursor: pointer;
 }
+
 form button:hover {
-  background-color: #0288d1;
+  background: #0b5ed7;
 }
 
-.login-form form{
-  display: block;
-  max-width: 400px;
-  margin: 2rem auto;
-}
-
-.login-form .form-group {
-  margin-bottom: 1rem;
-}
-
-.login-form button {
-  width: 100%;
-}
-
-.login-links {
-  margin-top: 1rem;
-  text-align: center;
-}
-
-.login-links a {
-  display: inline-block;
-  margin: 0.25rem 0;
-  font-size: 0.85rem;
-  color: #2b4b7b;
-  text-decoration: none;
-}
-
-.login-links a strong {
-  font-weight: 600;
-}
-
-.login-links a:hover {
-  text-decoration: underline;
-}
-
+/* =========================
+   Mensajes
+========================= */
 .mensaje-success {
-  background-color: #d4edda;
+  background: #d4edda;
   color: #155724;
-  padding: 0.75rem;
+  padding: .75rem;
   border-radius: 4px;
   margin-bottom: 1rem;
 }
 
 .mensaje-error {
-  background-color: #f8d7da;
+  background: #f8d7da;
   color: #721c24;
-  padding: 0.75rem;
+  padding: .75rem;
   border-radius: 4px;
   margin-bottom: 1rem;
 }
 
-.contenido-empresa {
-  padding: 1rem;
+/* =========================
+   Layout OFERTA (PC)
+========================= */
+.oferta-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  align-items: stretch;
+  margin-top: 1rem;
 }
 
-.footer-empresa,.footer-candidato {
-  background-color: #222;
-  color: #ccc;
-  text-align: center;
-  padding: 1rem;
-  font-size: 0.9rem;
-}
-
-/* Botón hamburguesa */
-.nav-toggle-empresa {
-  background: none;
-  border: none;
-  font-size: 2rem;
-  color: rgb(43, 75, 123);
-  cursor: pointer;
-  display: none;
-  margin-left: auto;
-  z-index: 1001;
-  width: auto;
-  padding: 0;
-}
-
-/* Menú principal en desktop */
-.menu-principal {
-  list-style: none;
+.oferta-col-izq {
   display: flex;
+  flex-direction: column;
   gap: 1.2rem;
 }
 
-/* =========================
-   Sticky footer layout
-========================= */
-html, body {
-  height: 100%;
-}
-
-.contenido-empresa,.contenido-candidato {
-  min-height: 75vh;
+.oferta-col-der {
   display: flex;
   flex-direction: column;
 }
 
-/* El contenido crece y empuja el footer */
-.contenido-empresa,.contenido-candidato > *:not(.footer-empresa) {
-  flex-shrink: 0;
+.oferta-col-der .form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Footer al final */
-.footer-empresa ,.footer-candidato{
-  margin-top: auto;
+.oferta-col-der textarea {
+  flex: 1;
+  resize: none;
 }
 
+/* =========================
+   Login
+========================= */
+.login-form form {
+  max-width: 400px;
+}
 
-/* Responsive: menú lateral en mobile */
+/* =========================
+   Responsive
+========================= */
 @media (max-width: 768px) {
-  .nav-toggle-empresa {
-    display: block; /* visible en mobile */
-  }
 
-  .menu-principal {
-    flex-direction: column;
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 280px;
-    height: 100vh;
-    background-color: #fff;
-    padding: 4rem 2rem;
-    transform: translateX(100%); /* oculto fuera de pantalla */
-    transition: transform 0.4s ease-in-out;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-  }
-
-  .menu-principal.show {
-    transform: translateX(0); /* entra suavemente */
-  }
-
-  .menu-principal a {
-    color: rgb(43, 75, 123);
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 1rem 0;
-    text-align: left;
-    width: 100%;
-    text-decoration: none;
-  }
-
-  /* Overlay para oscurecer el fondo */
-  .nav-overlay-empresa {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: none;
-    z-index: 999;
-  }
-
-  .nav-overlay-empresa.show {
-    display: block;
+  .oferta-grid {
+    grid-template-columns: 1fr;
   }
 
   form {
-    grid-template-columns: 1fr; /* una sola columna */
+    padding: 1.25rem;
+  }
+
+  .menu-principal {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 280px;
+    height: 100vh;
+    background: #fff;
+    flex-direction: column;
+    padding: 4rem 2rem;
+    transform: translateX(100%);
+    transition: transform .3s ease;
+  }
+
+  .menu-principal.show {
+    transform: translateX(0);
   }
 }

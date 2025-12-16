@@ -1,7 +1,9 @@
 <?php
-
+require_once __DIR__ . "/../includes/config.php";
 require_once __DIR__ . "/../includes/funciones.php";
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 redirectIfNotLoggedIn();
 $conn = conectarBD();
 

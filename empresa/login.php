@@ -21,6 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->close();
 
     if ($usuario && password_verify($password, $usuario["password_hash"])) {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         $_SESSION["idusuario"] = $usuario["id"];
         $_SESSION["idempresa"] = $usuario["idempresa"];
         $_SESSION["usuario_nombre"] = $usuario["nombre"] . " " . $usuario["apellidos"];
