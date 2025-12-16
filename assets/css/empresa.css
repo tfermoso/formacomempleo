@@ -239,25 +239,40 @@ form button:hover {
   overflow-x: auto;
 }
 
-table {
+/* Tablas */
+.table-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  overflow-x: auto; /* asegura scroll en pantallas pequeñas */
+}
+
+.table-container table {
   width: 100%;
   border-collapse: collapse;
   background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05); /* sombra ligera */
 }
 
-thead {
-  background-color: #2b4b7b;
-  color: #fff;
-}
-
-th,
-td {
+.table-container th {
+  background-color: #f9fafb;
+  font-weight: 600;
   padding: 0.75rem 1rem;
   text-align: left;
   border-bottom: 1px solid #ddd;
+  color: #2b4b7b; /* azul corporativo */
 }
+
+.table-container td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.table-container tr:hover {
+  background-color: #f5f5f5;
+}
+
 
 /* Responsive: menú lateral en mobile */
 @media (max-width: 768px) {
