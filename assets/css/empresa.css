@@ -193,7 +193,7 @@ form button:hover {
   padding: 1rem;
 }
 
-.footer-empresa {
+.footer-empresa,.footer-candidato {
   background-color: #222;
   color: #ccc;
   text-align: center;
